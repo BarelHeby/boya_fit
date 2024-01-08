@@ -1,0 +1,112 @@
+CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Body_Parts` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`));
+
+CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Muscles` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(45) NOT NULL,
+  `BodyPartId` INT NULL,
+  PRIMARY KEY (`Id`),
+  INDEX `MuscleToBodyPart_idx` (`BodyPartId` ASC) VISIBLE,
+  CONSTRAINT `MuscleToBodyPart`
+    FOREIGN KEY (`BodyPartId`)
+    REFERENCES `boya_fit_1`.`Body_Parts` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Equipments` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`Id`));
+
+CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Exercises` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(180) NULL,
+  `Difficulty` INT NOT NULL,
+  `Calories` INT NULL,
+  `TimeSeconds` INT NULL,
+  `EquipmentId` INT NULL,
+  `BodyPartId` INT NULL,
+  `Instructions` LONGTEXT NULL ,
+  INDEX `EquipmentToExercise_idx` (`EquipmentId` ASC) VISIBLE,
+  INDEX `BodyPartToExercise_idx` (`BodyPartId` ASC) VISIBLE,
+  INDEX `OrderIndex` (`Difficulty` ASC, `BodyPartId` ASC) VISIBLE,
+  PRIMARY KEY (`Id`),
+  CONSTRAINT `EquipmentToExercise`
+    FOREIGN KEY (`EquipmentId`)
+    REFERENCES `boya_fit_1`.`Equipments` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `BodyPartToExercise`
+    FOREIGN KEY (`BodyPartId`)
+    REFERENCES `boya_fit_1`.`Body_Parts` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Excercise_Muscles` (
+  `ExerciseId` INT NOT NULL,
+  `MuscleId` INT NOT NULL,
+  `Priority` INT NOT NULL,
+  INDEX `ByExercise` (`ExerciseId` ASC) VISIBLE,
+  INDEX `ByMuscle` (`MuscleId` ASC) VISIBLE,
+  CONSTRAINT `ToExercise`
+    FOREIGN KEY (`ExerciseId`)
+    REFERENCES `boya_fit_1`.`Exercises` (`Id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `ToMuscle`
+    FOREIGN KEY (`MuscleId`)
+    REFERENCES `boya_fit_1`.`Muscles` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Users` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(180) NULL,
+  `Email` VARCHAR(180) NULL,
+  `Password` VARCHAR(45) NULL,
+  `FitnessLevel` INT NULL,
+  `Weight` INT NULL,
+  `Height` INT NULL,
+  PRIMARY KEY (`Id`),
+  INDEX `UsersByName` (`Name` ASC) VISIBLE);
+
+
+CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Users_History` (
+  `UserId` INT NOT NULL,
+  `ExerciseId` INT NOT NULL,
+  `Time` DATETIME NOT NULL,
+  INDEX `fk_Users_History_1_idx` (`UserId` ASC) VISIBLE,
+  INDEX `fk_Users_History_2_idx` (`ExerciseId` ASC) VISIBLE,
+  INDEX `idx_by_date_users_history` (`Time` ASC) VISIBLE,
+  CONSTRAINT `fk_Users_History_1`
+    FOREIGN KEY (`UserId`)
+    REFERENCES `boya_fit_1`.`Users` (`Id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Users_History_2`
+    FOREIGN KEY (`ExerciseId`)
+    REFERENCES `boya_fit_1`.`Exercises` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Rating` (
+  `UserId` INT NULL,
+  `ExerciseId` INT NULL,
+  `Rating` INT NULL,
+  `Description` VARCHAR(250) NULL,
+  `Time` DATETIME NULL,
+  INDEX `fk_Rating_1_idx` (`UserId` ASC) VISIBLE,
+  INDEX `fk_Rating_2_idx` (`ExerciseId` ASC) VISIBLE,
+  INDEX `idx_Time_Rating` (`Time` DESC, `Rating` DESC) VISIBLE,
+  CONSTRAINT `fk_Rating_1`
+    FOREIGN KEY (`UserId`)
+    REFERENCES `boya_fit_1`.`Users` (`Id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Rating_2`
+    FOREIGN KEY (`ExerciseId`)
+    REFERENCES `boya_fit_1`.`Exercises` (`Id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);

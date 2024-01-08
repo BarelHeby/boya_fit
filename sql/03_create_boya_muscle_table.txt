@@ -1,0 +1,11 @@
+CREATE TABLE `boya_fit`.`Muscles` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(45) NOT NULL,
+  `BodyPartId` INT NULL,
+  PRIMARY KEY (`Id`),
+  INDEX `MuscleToBodyPart_idx` (`BodyPartId` ASC) VISIBLE,
+  CONSTRAINT `MuscleToBodyPart`
+    FOREIGN KEY (`BodyPartId`)
+    REFERENCES `boya_fit`.`Body_Parts` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

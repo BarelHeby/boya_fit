@@ -1,0 +1,22 @@
+CREATE TABLE `boya_fit`.`Exercises` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(45) NULL,
+  `Difficulty` INT NOT NULL,
+  `Calories` INT NULL,
+  `TimeSeconds` INT NULL,
+  `EquipmentId` INT NULL,
+  `BodyPartId` INT NULL,
+  INDEX `EquipmentToExercise_idx` (`EquipmentId` ASC) VISIBLE,
+  INDEX `BodyPartToExercise_idx` (`BodyPartId` ASC) VISIBLE,
+  INDEX `OrderIndex` (`Difficulty` ASC, `BodyPartId` ASC) VISIBLE,
+  PRIMARY KEY (`Id`),
+  CONSTRAINT `EquipmentToExercise`
+    FOREIGN KEY (`EquipmentId`)
+    REFERENCES `boya_fit`.`Equipments` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `BodyPartToExercise`
+    FOREIGN KEY (`BodyPartId`)
+    REFERENCES `boya_fit`.`Body_Parts` (`Id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

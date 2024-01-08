@@ -1,0 +1,12 @@
+CREATE TABLE `boya_fit`.`Instructions` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Description` VARCHAR(180) NOT NULL,
+  `ExerciseId` INT NOT NULL,
+  `Step` INT NOT NULL,
+  PRIMARY KEY (`Id`),
+  INDEX `ToExercise_idx` (`ExerciseId` ASC) VISIBLE,
+  CONSTRAINT `ToExercises`
+    FOREIGN KEY (`ExerciseId`)
+    REFERENCES `boya_fit`.`Exercises` (`Id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);
