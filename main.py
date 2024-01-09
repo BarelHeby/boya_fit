@@ -1,5 +1,5 @@
-from DbManager import DbManager
-from TableCreator import TableCreator
+from Db_Manager import DbManager
+from Table_Creator import TableCreator
 print("Start creating the database")
 dbManager = DbManager()
 print("Database created successfully")

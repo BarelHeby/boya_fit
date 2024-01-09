@@ -1,5 +1,5 @@
 import pandas as pd
-from DataRow import DataRow
+from Data_Row import DataRow
 from models.BodyParts import BodyParts
 from models.Equipments import Equipment
 from models.Excercise_Muscles import ExerciseMuscle
