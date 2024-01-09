@@ -1,6 +1,6 @@
 import pandas as pd
 from Data_Row import DataRow
-from models.BodyParts import BodyParts
+from models.Body_Parts import BodyParts
 from models.Equipments import Equipment
 from models.Excercise_Muscles import ExerciseMuscle
 from models.Exercises import Exercise
