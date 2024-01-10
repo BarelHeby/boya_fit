@@ -1,0 +1,28 @@
+profile_pictures = [
+    "https://img.freepik.com/free-photo/freedom-concept-with-hiker-mountain_23-2148107064.jpg?w=826&t=st=1704885272~exp=1704885872~hmac=a901b89345e564e741e8ee6c30202550933be1f2dd1c18891e9b0e90f1b0b870",
+    "https://img.freepik.com/free-photo/side-view-portrait-happy-smiling-man_171337-4839.jpg?size=626&ext=jpg",
+    "https://img.freepik.com/free-photo/portrait-white-man-isolated_53876-40306.jpg?size=626&ext=jpg",
+    "https://images.pexels.com/photos/3772510/pexels-photo-3772510.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/1674752/pexels-photo-1674752.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/1199590/pexels-photo-1199590.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/9222625/pexels-photo-9222625.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/3771639/pexels-photo-3771639.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/6707077/pexels-photo-6707077.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/1619299/pexels-photo-1619299.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/3772531/pexels-photo-3772531.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/3768722/pexels-photo-3768722.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/1431282/pexels-photo-1431282.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/1547248/pexels-photo-1547248.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/1103833/pexels-photo-1103833.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/6787440/pexels-photo-6787440.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/936094/pexels-photo-936094.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/3768593/pexels-photo-3768593.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/4720309/pexels-photo-4720309.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/13896072/pexels-photo-13896072.jpeg?auto=compress&cs=tinysrgb&w=400",
+    "https://images.pexels.com/photos/6787202/pexels-photo-6787202.jpeg?auto=compress&cs=tinysrgb&w=400"
+
+]

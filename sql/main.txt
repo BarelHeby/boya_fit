@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Users` (
   `FitnessLevel` INT NULL,
   `Weight` INT NULL,
   `Height` INT NULL,
+  `Picture` VARCHAR(250) NULL,
   PRIMARY KEY (`Id`),
   INDEX `UsersByName` (`Name` ASC) VISIBLE);
 
