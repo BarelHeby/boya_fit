@@ -111,3 +111,19 @@ CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Rating` (
     REFERENCES `boya_fit_1`.`Exercises` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION);
+
+CREATE TABLE `boya_fit_1`.`Users_Friends` (
+  `UserId1` INT NULL,
+  `UserId2` INT NULL,
+  INDEX `fk_Users_Friends_1_idx` (`UserId1` ASC) VISIBLE,
+  INDEX `fk_Users_Friends_2_idx` (`UserId2` ASC) VISIBLE,
+  CONSTRAINT `fk_Users_Friends_1`
+    FOREIGN KEY (`UserId1`)
+    REFERENCES `boya_fit_1`.`Users` (`Id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Users_Friends_2`
+    FOREIGN KEY (`UserId2`)
+    REFERENCES `boya_fit_1`.`Users` (`Id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);
