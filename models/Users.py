@@ -2,7 +2,7 @@ import numpy as np
 
 
 class User:
-    def __init__(self, name: str, email: str, password: str, fitness_level: int, weight: int, height: int, query_func: callable = None) -> None:
+    def __init__(self, name: str, email: str, password: str, fitness_level: int, weight: int, height: int, query_func: callable = None, id=None) -> None:
         self.name = name
         self.email = email
         self.password = password
@@ -10,9 +10,27 @@ class User:
         self.weight = weight
         self.height = height
         self._query_func = query_func
+        self.id = id
 
     def set_query_func(self, query_func: callable):
         self._query_func = query_func
+
+    def create_from_query_row(row):
+        name = row[1]
+        email = row[2]
+        password = row[3]
+        fitness_level = row[4]
+        weight = row[5]
+        height = row[6]
+        id = row[0]
+        return User(name, email, password, fitness_level, weight, height, id=id)
+
+    def get(query_func: callable, id=None):
+        query = "SELECT * FROM Users"
+        if id != None:
+            query += f" WHERE Id={id}"
+        resp = query_func(query)
+        return [User.create_from_query_row(row) for row in resp]
 
     def insert(self):
         query = "INSERT INTO Users (Name, Email, Password, FitnessLevel, Weight, Height) VALUES (%s, %s, %s, %s, %s, %s)"

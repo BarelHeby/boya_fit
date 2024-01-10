@@ -2,7 +2,7 @@ from random import randint, randrange
 
 
 class Exercise:
-    def __init__(self, name: str, difficulty: int, calories: int, time_seconds: int, equipment_id: int, body_part_id: int, instructions: list, query_func: callable = None) -> None:
+    def __init__(self, name: str, difficulty: int, calories: int, time_seconds: int, equipment_id: int, body_part_id: int, instructions: list, query_func: callable = None, id=None) -> None:
         self.name = name
         self.difficulty = difficulty
         self.calories = calories
@@ -11,6 +11,25 @@ class Exercise:
         self.body_part_id = body_part_id
         self.instructions = instructions
         self._query_func = query_func
+        self.id = id
+
+    def create_from_query_row(row):
+        name = row[1]
+        difficulty = row[2]
+        calories = row[3]
+        time_seconds = row[4]
+        equipment_id = row[5]
+        body_part_id = row[6]
+        instructions = row[7].split("###")
+        id = row[0]
+        return Exercise(name, difficulty, calories, time_seconds, equipment_id, body_part_id, instructions, id=id)
+
+    def get(query_func: callable, id=None):
+        query = "SELECT * FROM Exercises"
+        if id != None:
+            query += f" WHERE Id={id}"
+        resp = query_func(query)
+        return [Exercise.create_from_query_row(row) for row in resp]
 
     def set_query_func(self, query_func: callable):
         self._query_func = query_func
