@@ -23,8 +23,11 @@ export default class Entity {
    */
   connect(entity, entityId) {
     return ServiceManager.post(
-      this.modelEndPointUrl + "/connect/",
-      entity.modelEndPointUrl + `/${entityId}`
+      this.modelEndPointUrl +
+        `/${this.id}` +
+        "/connect/" +
+        entity.modelEndPointUrl +
+        `/${entityId}`
     );
   }
 }
