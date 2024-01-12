@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Users` (
   `Weight` INT NULL,
   `Height` INT NULL,
   `Picture` VARCHAR(250) NULL,
+  `Latlon` POINT NOT NULL,
   PRIMARY KEY (`Id`),
   INDEX `UsersByName` (`Name` ASC) VISIBLE);
 
@@ -112,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Rating` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION);
 
-CREATE TABLE `boya_fit_1`.`Users_Friends` (
+CREATE TABLE  IF NOT EXISTS `boya_fit_1`.`Users_Friends` (
   `UserId1` INT NULL,
   `UserId2` INT NULL,
   INDEX `fk_Users_Friends_1_idx` (`UserId1` ASC) VISIBLE,
@@ -128,7 +129,7 @@ CREATE TABLE `boya_fit_1`.`Users_Friends` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION);
 
-CREATE TABLE `boya_fit_1`.`Gyms` (
+CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Gyms` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `Adress` VARCHAR(45) NOT NULL,
