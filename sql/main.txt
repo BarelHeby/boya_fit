@@ -127,3 +127,17 @@ CREATE TABLE `boya_fit_1`.`Users_Friends` (
     REFERENCES `boya_fit_1`.`Users` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION);
+
+CREATE TABLE `boya_fit_1`.`Gyms` (
+  `Id` INT NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(45) NOT NULL,
+  `Adress` VARCHAR(45) NOT NULL,
+  `City` VARCHAR(45) NOT NULL,
+  `Zip` VARCHAR(45) NOT NULL,
+  `Country` VARCHAR(45) NOT NULL,
+  `Country_Short_Code` VARCHAR(45) NOT NULL,
+  `Is_Kids` TINYINT NOT NULL,
+  `Is_Active` TINYINT NOT NULL,
+  `Logo_Photo` VARCHAR(45) NOT NULL,
+  `Latlon` POINT NOT NULL,
+  PRIMARY KEY (`Id`));
