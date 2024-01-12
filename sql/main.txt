@@ -136,9 +136,9 @@ CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Gyms` (
   `City` VARCHAR(45) NOT NULL,
   `Zip` VARCHAR(45) NOT NULL,
   `Country` VARCHAR(45) NOT NULL,
-  `Country_Short_Code` VARCHAR(45) NOT NULL,
-  `Is_Kids` TINYINT NOT NULL,
-  `Is_Active` TINYINT NOT NULL,
+  `CountryShortCode` VARCHAR(45) NOT NULL,
+  `IsKids` TINYINT NOT NULL,
+  `IsActive` TINYINT NOT NULL,
   `Logo_Photo` VARCHAR(45) NOT NULL,
   `Latlon` POINT NOT NULL,
   PRIMARY KEY (`Id`));
