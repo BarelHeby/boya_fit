@@ -3,16 +3,16 @@ export default class Entity {
   constructor(modelEndPointUrl) {
     this.modelEndPointUrl = modelEndPointUrl;
   }
-  get(id = null) {
+  async get(id = null) {
     ServiceManager.get(this.modelEndPointUrl, id);
   }
-  add(data) {
-    ServiceManager.post(this.modelEndPointUrl, data);
+  async add(data) {
+    return await ServiceManager.post(this.modelEndPointUrl, data);
   }
-  update(id, data) {
+  async update(id, data) {
     ServiceManager.put(this.modelEndPointUrl, id, data);
   }
-  delete(id) {
+  async delete(id) {
     ServiceManager.delete(this.modelEndPointUrl, id);
   }
 

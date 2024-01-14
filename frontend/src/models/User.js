@@ -30,7 +30,7 @@ export default class User extends Entity {
       height: this.height,
     };
   }
-  fromJson(json) {
+  static fromJson(json) {
     return new User(
       json.id,
       json.name,
