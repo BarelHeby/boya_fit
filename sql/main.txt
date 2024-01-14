@@ -142,3 +142,15 @@ CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Gyms` (
   `Logo_Photo` VARCHAR(45) NOT NULL,
   `Latlon` POINT NOT NULL,
   PRIMARY KEY (`Id`));
+
+CREATE  OR REPLACE VIEW `User_History_View` AS
+select
+	distinct
+    uh.Time,
+    uh.UserId,
+	Exercises.*
+from
+	Users_History uh,
+    Exercises
+WHERE
+	uh.ExerciseId = Exercises.Id;
