@@ -8,6 +8,7 @@ from models.Muscle import Muscle
 from models.Users import User
 from models.Users_History import UsersHistory
 from models.Rating import Rating
+from models.Gyms import Gyms
 
 
 class TableCreator:
@@ -35,6 +36,16 @@ class TableCreator:
         User.generate_and_insert(self._query_func)
         UsersHistory.generate_and_insert(self._query_func)
         Rating.generate_and_insert(self._query_func)
+        data = pd.read_csv("data/gyms.csv")
+        data=data.fillna("")
+        data.apply(self._fill_gym, axis=1)
+
+
+    def _fill_gym(self, row: pd.Series):
+        # Create a DataRow object from the row
+        data_row = Gyms.rowToData(row,self._query_func)
+        data_row.insert()
+
 
     def _fill_by_row(self, row: pd.Series):
         # Create a DataRow object from the row

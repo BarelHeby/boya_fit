@@ -1,5 +1,5 @@
 from random import randint, randrange
-
+import pandas as pd
 
 class Gyms:
     def __init__(self, Id: int, Name: str, Adress: str, City: str, Zip: str, Country: str, CountryShortCode: str, IsKids: int, IsActive: int, Logo_Photo: str, Latlon: str, query_func: callable = None) -> None:
@@ -15,6 +15,20 @@ class Gyms:
         self.Logo_Photo = Logo_Photo
         self.Latlon = Latlon
         self._query_func = query_func
+
+    def rowToData( row: pd.Series,query_func:callable) -> None:
+        Id = int(row["Id"])
+        Name = row["Name"]
+        Adress = row["Adress"]
+        City = row["City"]
+        Zip = row["Zip"]
+        Country = row["Country"]
+        CountryShortCode = row["CountryShortCode"]
+        IsKids = int(row["IsKids"])
+        IsActive = int(row["IsActive"])
+        Logo_Photo = row["Logo_Photo"]
+        Latlon = row["Latlon"]
+        return Gyms(Id,Name,Adress,City,Zip,Country,CountryShortCode,IsKids,IsActive,Logo_Photo,Latlon,query_func)
         
 
     def create_from_query_row(row):
@@ -32,7 +46,7 @@ class Gyms:
         return Gyms(Id, Name, Adress,City,Zip,Country,CountryShortCode,IsKids,IsActive,Logo_Photo,Latlon)
 
     def get(query_func: callable, id=None):
-        query = "SELECT * FROM Exercises"
+        query = "SELECT * FROM Gyms"
         if id != None:
             query += f" WHERE Id={id}"
         resp = query_func(query)
@@ -43,37 +57,14 @@ class Gyms:
 
     def is_exist(name, query_func: callable):
         return query_func(
-            f"SELECT Id FROM Exercises WHERE Name = %s", [name])
+            f"SELECT Id FROM Gyms WHERE Name = %s", [name])
 
     def insert(self):
-        instructions_text = "###".join(self.instructions)
-        resp = Exercise.is_exist(self.name, self._query_func)
-        if len(resp) == 0:
-            return self._query_func("""INSERT INTO 
-                Exercises 
-                    (Name,
-                    Difficulty,
-                    Calories,
-                    TimeSeconds,
-                    EquipmentId,
-                    BodyPartId,
-                    Instructions
-                    ) 
+        numbers = [0,0] if len(self.Latlon.split(','))!=2 else self.Latlon.split(',')
+        return self._query_func("""
+                INSERT INTO 
+                gyms 
+                    (Name,Adress,City,Zip,Country,CountryShortCode,IsKids,IsActive,Logo_Photo,Latlon) 
                 VALUES 
-                (%s,%s,%s,%s,%s,%s,%s)""",
-                                    [self.name,
-                                     self.difficulty,
-                                     self.calories,
-                                     self.time_seconds,
-                                     self.equipment_id,
-                                     self.body_part_id,
-                                     instructions_text], True)
-
-        else:
-            return resp[0][0]
-
-    def generate(name: str, equipment_id: int, body_part_id: int, instructions: list):
-        difficulty = randint(1, 6)
-        calories = randint(1, 100)
-        time_seconds = randrange(20, 40, 5)
-        return Exercise(name, difficulty, calories, time_seconds, equipment_id, body_part_id, instructions)
+                (%s,%s,%s,%s,%s,%s,%s,%s,%s,ST_GeomFromText('POINT(%s %s)'))""",
+                                    [self.Name,self.Adress,self.City,self.Zip,self.Country,self.CountryShortCode,self.IsKids,self.IsActive,self.Logo_Photo,float(numbers[0]),float(numbers[1])], True)
