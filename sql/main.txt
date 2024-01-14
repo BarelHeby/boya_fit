@@ -132,14 +132,14 @@ CREATE TABLE  IF NOT EXISTS `boya_fit_1`.`Users_Friends` (
 CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Gyms` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
-  `Adress` VARCHAR(45) NOT NULL,
+  `Adress` VARCHAR(180) NOT NULL,
   `City` VARCHAR(45) NOT NULL,
-  `Zip` VARCHAR(45) NOT NULL,
+  `Zip` VARCHAR(45),
   `Country` VARCHAR(45) NOT NULL,
-  `CountryShortCode` VARCHAR(45) NOT NULL,
+  `CountryShortCode` VARCHAR(45),
   `IsKids` TINYINT NOT NULL,
   `IsActive` TINYINT NOT NULL,
-  `Logo_Photo` VARCHAR(45) NOT NULL,
+  `Logo_Photo` LONGTEXT NOT NULL,
   `Latlon` POINT NOT NULL,
   PRIMARY KEY (`Id`));
 
