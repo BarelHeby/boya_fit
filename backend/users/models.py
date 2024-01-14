@@ -65,9 +65,9 @@ class User:
         DbManager.query(query, [self.name, self.email, self.password,
                                 self.fitness_level, self.weight, self.height, self.picture, self.latitude, self.longitude, self.id], True)
 
-    def isExists(email):
+    def is_exists(self):
         query = "SELECT Id FROM Users WHERE Email=%s"
-        resp = DbManager.query(query, [email])
+        resp = DbManager.query(query, [self.email])
         return len(resp) > 0
 
     def login(email, password):
