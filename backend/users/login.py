@@ -11,7 +11,7 @@ class LoginView(APIView):
             password = request.data.get('password')
             user = User.login(email, password)
             if user is None:
-                return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Invalid credentials'}, status=status.HTTP_404_NOT_FOUND)
             return Response(user.to_json(), status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': e}, status=status.HTTP_400_BAD_REQUEST)

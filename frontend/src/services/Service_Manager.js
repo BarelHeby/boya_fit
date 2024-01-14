@@ -1,20 +1,43 @@
 import axios from "axios";
 export default class ServiceManager {
-  get(modelUrl, id = null) {
+  static async get(modelUrl, id = null) {
     const fullUrl =
       process.env.REACT_APP_API_URL + modelUrl + (id ? `/${id}` : "/");
-    return axios.get(fullUrl);
+    return await axios.get(fullUrl).then((res) => {
+      return { status: res.status, data: res.data };
+    });
   }
-  post(modelUrl, data = null) {
+  static async post(modelUrl, data = null) {
     const fullUrl = process.env.REACT_APP_API_URL + modelUrl + "/";
-    return axios.post(fullUrl, data);
+    return await axios
+      .post(fullUrl, data)
+      .then((res) => {
+        return { status: res.status, data: res.data };
+      })
+      .catch((err) => {
+        return { status: err.response.status, data: err.response.data };
+      });
   }
-  put(modelUrl, id, data) {
+  static async put(modelUrl, id, data) {
     const url = process.env.REACT_APP_API_URL + modelUrl + `/${id}`;
-    return axios.put(url, data);
+    return axios
+      .put(url, data)
+      .then((res) => {
+        return { status: res.status, data: res.data };
+      })
+      .catch((err) => {
+        return { status: err.response.status, data: err.response.data };
+      });
   }
-  delete(modelUrl, id) {
+  static async delete(modelUrl, id) {
     const url = process.env.REACT_APP_API_URL + modelUrl + `/${id}`;
-    return axios.delete(url);
+    return axios
+      .delete(url)
+      .then((res) => {
+        return { status: res.status, data: res.data };
+      })
+      .catch((err) => {
+        return { status: err.response.status, data: err.response.data };
+      });
   }
 }
