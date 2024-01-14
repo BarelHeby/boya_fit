@@ -21,6 +21,20 @@ class User:
     def from_json(json, id=None):
         return User(json["name"], json["email"], json["password"], json["fitness_level"], json["weight"], json["height"], json["picture"], json["latitude"], json["longitude"], id=id)
 
+    def to_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "email": self.email,
+            "password": self.password,
+            "fitness_level": self.fitness_level,
+            "weight": self.weight,
+            "height": self.height,
+            "picture": self.picture,
+            "latitude": self.latitude,
+            "longitude": self.longitude
+        }
+
     def create_from_query_row(row):
         name = row[1]
         email = row[2]
@@ -50,3 +64,15 @@ class User:
         query = "UPDATE Users SET Name=%s, Email=%s, Password=%s, FitnessLevel=%s, Weight=%s, Height=%s,Picture=%s,Latlon=ST_GeomFromText('POINT(%s %s)') WHERE Id=%s"
         DbManager.query(query, [self.name, self.email, self.password,
                                 self.fitness_level, self.weight, self.height, self.picture, self.latitude, self.longitude, self.id], True)
+
+    def isExists(email):
+        query = "SELECT Id FROM Users WHERE Email=%s"
+        resp = DbManager.query(query, [email])
+        return len(resp) > 0
+
+    def login(email, password):
+        query = "SELECT Id,Name,Email,Password,FitnessLevel,Weight,Height,Picture,ST_X(Latlon) x,ST_Y(Latlon) y FROM Users WHERE Email=%s AND Password=%s"
+        resp = DbManager.query(query, [email, password])
+        if len(resp) > 0:
+            return User.create_from_query_row(resp[0])
+        return None
