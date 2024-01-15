@@ -7,8 +7,9 @@ import RatingCard from "./RatingCard";
 import UserModel from "../../models/User";
 import UsersHistory from "../../models/UserHistory";
 import Rating from "../../models/Rating";
+import { useParams } from "react-router-dom";
 function User() {
-  const id = 5;
+  const { id } = useParams();
   const [mainUser, setMainUser] = useState({});
   const [userHistory, setUserHistory] = useState([]);
   const [ratings, setRatings] = useState([]);
@@ -20,6 +21,7 @@ function User() {
         setMainUser(resp[0]);
       } else {
         alert("User was not found");
+        window.location.href = "/";
         setMainUser({});
       }
     }
@@ -55,11 +57,12 @@ function User() {
         {friends.map((friend, index) => (
           <Col xs={friends.length > 6 ? 1 : 2} key={index}>
             <img
-              width={45}
-              height={45}
+              width={50}
+              height={50}
               alt="friend"
-              className="rounded-circle "
+              className="rounded-circle pointer"
               src={friend.picture}
+              onClick={() => (window.location.href = `/users/${friend.id}`)}
             />
             <br />
             <label>{friend.name}</label>

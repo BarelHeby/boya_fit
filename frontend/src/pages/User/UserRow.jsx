@@ -13,7 +13,7 @@ function UserTop({ user, latestWorkout, completedExercises }) {
           <img
             width={90}
             height={90}
-            className="rounded-circle "
+            className="rounded-circle pointer"
             src={user?.picture}
             alt="user"
           />
