@@ -1,40 +1,51 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
-function UserTop() {
+/**
+ *
+ * @param {User} user
+ * @returns
+ */
+function UserTop({ user, latestWorkout, completedExercises }) {
   return (
-    <Row className="align-items-center">
+    <Row className="align-items-center text-center">
       <Col xs={3}>
-        <img
-          width={90}
-          height={90}
-          className="rounded-circle "
-          src="https://picsum.photos/200/300"
-          alt="user"
-        />
+        {user.picture ? (
+          <img
+            width={90}
+            height={90}
+            className="rounded-circle "
+            src={user?.picture}
+            alt="user"
+          />
+        ) : (
+          <></>
+        )}
       </Col>
       <Col xs={3}>
-        <h3>Barel Heby</h3>
+        <h3>
+          <u>{user.name}</u>
+        </h3>
       </Col>
       <Col xs={2}>
         <label>
-          <b>Points</b>
+          <b>Completed Exercises</b>
         </label>
         <br />
-        <label>100</label>
+        <label>{completedExercises}</label>
       </Col>
       <Col xs={2}>
         <label>
           <b>Last Workout</b>
         </label>
         <br />
-        <label>2023-11-10</label>
+        <label>{latestWorkout?.substring(0, 10)}</label>
       </Col>
       <Col xs={2}>
         <label>
           <b>Fitness Level</b>
         </label>
         <br />
-        <label>3 (Out Of 5)</label>
+        <label>{user.fitnessLevel} (Out Of 5)</label>
       </Col>
     </Row>
   );

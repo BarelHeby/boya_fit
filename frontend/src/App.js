@@ -7,8 +7,8 @@ function App() {
   const [user, setUser] = useState(null);
   return (
     <div className="App">
-      {/* <User /> */}
-      <Login setUser={setUser} />
+      <User />
+      {/* <Login setUser={setUser} /> */}
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

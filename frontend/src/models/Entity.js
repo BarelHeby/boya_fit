@@ -3,8 +3,8 @@ export default class Entity {
   constructor(modelEndPointUrl) {
     this.modelEndPointUrl = modelEndPointUrl;
   }
-  async get(id = null) {
-    ServiceManager.get(this.modelEndPointUrl, id);
+  static async get(modelEndPointUrl, id = null) {
+    return await ServiceManager.get(modelEndPointUrl, id);
   }
   async add(data) {
     return await ServiceManager.post(this.modelEndPointUrl, data);

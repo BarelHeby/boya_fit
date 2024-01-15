@@ -46,13 +46,13 @@ export default class Exercise extends Entity {
       instructions: this.instructions,
     };
   }
-  fromJson(json) {
+  static fromJson(json) {
     return new Exercise(
       json.id,
       json.name,
       json.difficulty,
       json.calories,
-      json.timeSeconds,
+      json.time_seconds,
       json.equipmentId,
       json.bodyPartId,
       json.instructions

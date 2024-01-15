@@ -28,3 +28,9 @@ class UserView(APIView):
         user = User.from_json(d, id)
         user.update()
         return Response(user.to_json(), status=status.HTTP_200_OK)
+
+
+class UserFreinds(APIView):
+    def get(self, request, id=None):
+        users = User.get_friends(id)
+        return Response([user.to_json() for user in users], status=status.HTTP_200_OK)

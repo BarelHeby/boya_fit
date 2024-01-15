@@ -1,27 +1,30 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import "./user.css";
-function ExerciseCard() {
+function ExerciseCard({ user, exercise, time, body_part }) {
   return (
-    <Card>
-      <Card.Header>
-        <h4>3/4 sit-up</h4>
+    <Card className="p-0">
+      <Card.Header className="border rounded-top">
+        <h4>{exercise.name}</h4>
       </Card.Header>
-      <Card.Body className="card_background text-white">
+      <Card.Body className="card_background text-white rounded-bottom">
         <Card.Text>
-          <b>Difficulty:</b> 3
+          <b>Difficulty :</b> {exercise.difficulty}
         </Card.Text>
         <Card.Text>
-          <b>Last Time:</b> 20
+          <b>Last Time : </b>
+          {time}
         </Card.Text>
         <Card.Text>
-          <b>Body Part</b> Weist
+          <b>Time Completed (Sec) : </b>
+          {exercise.timeSeconds}
         </Card.Text>
         <Card.Text>
-          <b>Muscles:</b> Abs, Obliques, Hip Flexors
+          <b>Body Part</b> {body_part}
         </Card.Text>
         <Card.Text>
-          <b>Calories Burned:</b> 10
+          <b>Calories Burned:</b>{" "}
+          {(exercise.calories * 0.2 * user.weight).toFixed(0)}
         </Card.Text>
       </Card.Body>
     </Card>

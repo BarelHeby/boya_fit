@@ -9,7 +9,16 @@ export default class User extends Entity {
    * @param {int} weight user weight
    * @param {int} height user height
    */
-  constructor(id, name, email, password, fitnessLevel, weight, height) {
+  constructor(
+    id,
+    name,
+    email,
+    password,
+    fitnessLevel,
+    weight,
+    height,
+    picture
+  ) {
     super("users");
     this.id = id;
     this.name = name;
@@ -18,6 +27,7 @@ export default class User extends Entity {
     this.fitnessLevel = fitnessLevel;
     this.weight = weight;
     this.height = height;
+    this.picture = picture;
   }
   toJson() {
     return {
@@ -28,6 +38,7 @@ export default class User extends Entity {
       fitnessLevel: this.fitnessLevel,
       weight: this.weight,
       height: this.height,
+      picture: this.picture,
     };
   }
   static fromJson(json) {
@@ -36,10 +47,18 @@ export default class User extends Entity {
       json.name,
       json.email,
       json.password,
-      json.fitnessLevel,
+      json.fitness_level,
       json.weight,
-      json.height
+      json.height,
+      json.picture
     );
+  }
+  static async get(id = null) {
+    const resp = await super.get("users", id);
+    if (resp.status === 200) {
+      return resp.data.map((user) => User.fromJson(user));
+    }
+    return [];
   }
   add() {
     return super.add(this.toJson());
@@ -49,5 +68,19 @@ export default class User extends Entity {
   }
   update() {
     return super.update(this.id, this.toJson());
+  }
+  static async getHistory(id) {
+    const resp = await super.get("users_history", id);
+    if (resp.status === 200) {
+      return resp.data.map((user) => User.fromJson(user));
+    }
+    return [];
+  }
+  static async getFriends(id) {
+    const resp = await super.get("users", id + "/friends");
+    if (resp.status === 200) {
+      return resp.data.map((user) => User.fromJson(user));
+    }
+    return [];
   }
 }

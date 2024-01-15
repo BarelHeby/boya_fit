@@ -143,14 +143,23 @@ CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Gyms` (
   `Latlon` POINT NOT NULL,
   PRIMARY KEY (`Id`));
 
-CREATE  OR REPLACE VIEW `User_History_View` AS
+CREATE VIEW `User_History_View` AS
 select
-	distinct
-    uh.Time,
-    uh.UserId,
-	Exercises.*
-from
+	DISTINCT
+		uh.Time,
+        uh.UserId,
+        e.*,
+        bp.Name BodyPartName
+FROM
 	Users_History uh,
-    Exercises
+    Exercises e,
+    Body_Parts bp
 WHERE
-	uh.ExerciseId = Exercises.Id;
+	uh.ExerciseId = e.Id
+And
+	e.BodyPartId = bp.Id
+order by
+	uh.Time;
+
+CREATE  OR REPLACE VIEW `Users_View` AS
+SELECT Id,Name,Email,Password,FitnessLevel,Weight,Height,Picture,ST_X(Latlon) x,ST_Y(Latlon) y FROM Users;

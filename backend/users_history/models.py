@@ -6,10 +6,11 @@ from db.Db_Manager import DbManager
 
 
 class UsersHistory:
-    def __init__(self, user_id: int, time: datetime = None, exercise: Exercise = None) -> None:
+    def __init__(self, user_id: int, time: datetime = None, exercise: Exercise = None, body_part: str = None) -> None:
         self.time = time
         self.exercise = exercise
         self.user_id = user_id
+        self.body_part = body_part
 
     def get(id):
         query = """
@@ -36,15 +37,17 @@ class UsersHistory:
         exercise_equipment_id = row[7]
         exercise_body_part_id = row[8]
         exercise_instructions = row[9].split("###")
+        body_part = row[10]
         e = Exercise(exercise_name, exercise_difficulty, exercise_calories, exercise_time_seconds,
                      exercise_equipment_id, exercise_body_part_id, exercise_instructions, id=exercise_id)
-        return UsersHistory(user_id, time, e)
+        return UsersHistory(user_id, time, e, body_part)
 
     def to_json(self):
         return {
             "time": self.time,
             "user_id": self.user_id,
-            "exercise": self.exercise.to_json()
+            "exercise": self.exercise.to_json(),
+            "body_part": self.body_part,
         }
 
     def insert(self, date_sub=0, hours_sub=0):

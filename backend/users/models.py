@@ -49,7 +49,7 @@ class User:
         return User(name, email, password, fitness_level, weight, height, picture, latitude, longitude, id=id)
 
     def get(id=None):
-        query = "SELECT Id,Name,Email,Password,FitnessLevel,Weight,Height,Picture,ST_X(Latlon) x,ST_Y(Latlon) y FROM Users"
+        query = "SELECT * FROM Users_View"
         if id != None:
             query += f" WHERE Id={id}"
         resp = DbManager.query(query)
@@ -76,3 +76,31 @@ class User:
         if len(resp) > 0:
             return User.create_from_query_row(resp[0])
         return None
+
+    def get_friends(id):
+        query = """
+        with friendsIds as (	
+            select
+                    UserId1 Id
+                from
+                    Users_Friends
+                where
+                    UserId2 = %s
+            union 
+                select
+                    UserId2 Id
+                from
+                    Users_Friends
+                where
+                    UserId1 = %s
+        )
+        select
+            Users_View.*
+        from
+            Users_View,
+            friendsIds
+        where
+            Users_View.Id = friendsIds.Id
+    """
+        resp = DbManager.query(query, [id, id])
+        return [User.create_from_query_row(row) for row in resp]
