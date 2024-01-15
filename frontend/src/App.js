@@ -5,11 +5,13 @@ import { useState } from "react";
 import NavBar from "./components/navbar";
 import { createBrowserRouter, Route, RouterProvider } from "react-router-dom";
 import Users from "./pages/users";
+import Login from "./pages/login";
 function App() {
   const [user, setUser] = useState(null);
   const router = createBrowserRouter([
     { path: "/users", element: <Users /> },
     { path: "/users/:id", element: <User /> },
+    { path: "/login", element: <Login /> },
   ]);
   return (
     <div className="App">

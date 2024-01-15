@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import LoginModel from "../../models/login";
 import User from "../../models/User";
+
 function LoginComponent({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,8 +15,8 @@ function LoginComponent({ setUser }) {
     setLoading(false);
     if (resp.status === 200) {
       const u = User.fromJson(resp.data);
-      setUser(u);
       alert("Login Success");
+      sessionStorage.setItem("username", JSON.stringify(u.toJson()));
       window.location.href = "/Home";
     } else {
       alert("Login Failed");
