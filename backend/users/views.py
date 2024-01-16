@@ -34,3 +34,9 @@ class UserFreinds(APIView):
     def get(self, request, id=None):
         users = User.get_friends(id)
         return Response([user.to_json() for user in users], status=status.HTTP_200_OK)
+
+
+class UserActive(APIView):
+    def get(self, request, rows=None):
+        resp = User.get_most_active(rows)
+        return Response([{"user": user["user"].to_json(), "count": user["count"]} for user in resp], status=status.HTTP_200_OK)

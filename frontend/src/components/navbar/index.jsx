@@ -1,44 +1,80 @@
 import React from "react";
 import { Nav, NavItem, Navbar } from "react-bootstrap";
 import { CiUser } from "react-icons/ci";
+import boyaLogo from "../../images/logo/boya-white-logo-transparent.png";
+import "../../styles/animations.css";
+import Login from "./Login";
+import { IoIosLogOut } from "react-icons/io";
 function NavBar() {
+  const user = sessionStorage.getItem("username")
+    ? JSON.parse(sessionStorage.getItem("username"))
+    : null;
   return (
-    <Navbar bg="dark" className="text-white text-center" data-bs-theme="dark">
-      <Navbar.Brand className="ms-5" href="/">
-        Home
+    <Navbar
+      // variant="outline-light"
+      bg="dark"
+      className="text-white text-center  "
+      data-bs-theme="dark"
+      style={{ height: 80 }}
+    >
+      <Navbar.Brand href="/" className="ms-5">
+        <img src={boyaLogo} alt="logo" height={40} />
       </Navbar.Brand>
       <Nav className="mr-auto">
-        <Nav.Link href="/users">Users</Nav.Link>
-        <Nav.Link href="/exercises">Exercises</Nav.Link>
-        <Nav.Link href="/ratings">Ratings</Nav.Link>
-        <Nav.Link href="/user_history">User History</Nav.Link>
-        <Nav.Link href="/user_exercises">User Exercises</Nav.Link>
+        <Nav.Link href="/users" className="active">
+          Users
+        </Nav.Link>
+        <Nav.Link href="/exercises" className="active">
+          Exercises
+        </Nav.Link>
+        <Nav.Link href="/ratings" className="active">
+          Ratings
+        </Nav.Link>
+        <Nav.Link href="/user_history" className="active">
+          User History
+        </Nav.Link>
+        <Nav.Link href="/user_exercises" className="active">
+          User Exercises
+        </Nav.Link>
       </Nav>
-      <Nav className="ms-auto me-5">
-        {sessionStorage.getItem("username") ? (
+      <Nav className="ms-auto me-5 d-flex align-items-center justiify-content-center">
+        {user ? (
           <>
+            <label className="fs-5">Hello {user.name} | </label>
+
+            <NavItem className="text-center ms-3 me-2 ">
+              <CiUser
+                color="white"
+                size={40}
+                className="pointer border-white border rounded-circle p-2"
+                onClick={() => (window.location.href = `/users/${user.id}`)}
+              />
+              <br />
+              <small>Profile</small>
+            </NavItem>
             <Nav.Link
+              className="active text-center ms-2"
               onClick={() => {
                 sessionStorage.removeItem("username");
                 window.location.href = "/";
               }}
             >
-              Logout
-            </Nav.Link>
-            <NavItem>
-              <CiUser
-                size={45}
-                className="pointer ms-3 me-2 border rounded-circle p-2"
-                onClick={() =>
-                  (window.location.href = `/users/${
-                    JSON.parse(sessionStorage.getItem("username")).id
-                  }`)
-                }
+              <IoIosLogOut
+                color="white"
+                size={40}
+                className="pointer border rounded-circle p-2 border-white"
               />
-            </NavItem>
+              <br />
+              <small>Logout</small>
+            </Nav.Link>
           </>
         ) : (
-          <Nav.Link href="/login">Login</Nav.Link>
+          <>
+            <Login />
+            <Nav.Link href="/register" className="ms-2">
+              Register
+            </Nav.Link>
+          </>
         )}
       </Nav>
     </Navbar>

@@ -6,12 +6,12 @@ function HorizontalScroller({ items }) {
       style={{
         display: "flex",
         overflowX: "hidden",
-        maxWidth: "97%",
+        maxWidth: "100%",
         minHeight: "120px",
       }}
     >
       {items.map((item, i) => (
-        <div key={i} index className="scrollItem me-2">
+        <div key={i} index className="scrollItem ms-2">
           {item}
         </div>
       ))}

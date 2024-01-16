@@ -104,3 +104,33 @@ class User:
     """
         resp = DbManager.query(query, [id, id])
         return [User.create_from_query_row(row) for row in resp]
+
+    def get_most_active(rows):
+        query = f"""
+        with Users_Rank as (SELECT 
+            UserId Id,
+            count(*) as numOfExercisesLastSevenDays
+        FROM 
+            Users_History
+        where
+            Time>date_sub(current_time() ,INTERVAL 7 DAY)
+        group by
+            1
+        order by
+            2 desc
+        {"limit 50" if rows is None else f"limit {rows}"}
+        )
+        select
+            Users_View.*,
+            Users_Rank.numOfExercisesLastSevenDays
+        from
+            Users_View,
+            Users_Rank
+        where
+            Users_View.Id  = Users_Rank.Id
+        order by
+            Users_Rank.numOfExercisesLastSevenDays desc
+
+    """
+        resp = DbManager.query(query)
+        return [{"user": User.create_from_query_row(row), "count": row[10]} for row in resp]

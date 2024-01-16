@@ -7,6 +7,11 @@ import { FaUsers, FaDumbbell } from "react-icons/fa";
 import HorizontalScroller from "../../components/scroller/HorizontalScroller";
 import Rating from "../../models/Rating";
 import ReviewScrollItem from "./ReviewScrollItem";
+import worker from "./worker.png";
+import boyalogo from "../../images/logo/boya-black-logo-transparent.png";
+import wallpaper from "./wallpaper.jpg";
+import ActiveUsers from "./ActiveUsers";
+import { FaMedal } from "react-icons/fa";
 function Home() {
   const [reviews, setReviews] = React.useState([]);
   const ratings = reviews.map((rev, index) => (
@@ -22,13 +27,15 @@ function Home() {
     {
       to: "/users/",
       label: "View Users",
-      description: "View All Users",
+      description:
+        "Discover our diverse community of users, ranging from seasoned male athletes to fitness-conscious females. Everyone finds a place in our inclusive environment.",
       icon: <FaUsers size={25} />,
     },
     {
       to: "/exercises/",
       label: "Explore Exercises",
-      description: "View Our Latest Exercises",
+      description:
+        "Experience our top-notch exercises, meticulously designed to boost your fitness and enhance your strength. Join us for a healthier lifestyle.",
       icon: <FaDumbbell size={25} />,
     },
   ];
@@ -36,21 +43,24 @@ function Home() {
     <Container fluid={"xs"}>
       <Row>
         <img
-          src="https://png.pngtree.com/thumb_back/fh260/background/20230519/pngtree-an-old-gym-setting-with-dumbbells-image_2569910.jpg"
+          src={wallpaper}
           alt="workout"
-          height={190}
+          height={400}
+          style={{ position: "absolute", top: 80, left: 0 }}
           className="fade_bottom "
         />
-        <h1 className="text-center topToPlace  "> Boya Fit</h1>
-        <small className="text-center topToPlace">
-          Make Yout Life Accurate
-        </small>
+        <img
+          src={worker}
+          alt="male"
+          style={{ height: 400, width: 350, left: 200, top: 80 }}
+          className="position-absolute fade_bottom "
+        />
+        <div className="topToPlace boyaHeader">
+          <img src={boyalogo} alt="boya logo" height={300} />
+        </div>
       </Row>
-      <Row className="mt-2">
-        <HorizontalScroller items={ratings} />
-        {/* <ReviewsScrollBar /> */}
-      </Row>
-      <Row className="m-3 mt-2">
+      <div style={{ minHeight: 350 }}></div>
+      <Row className="text-center mx-auto m-3 mt-2 w-50">
         {paths.map((path, index) => (
           <Col
             xs={6}
@@ -63,11 +73,26 @@ function Home() {
           </Col>
         ))}
       </Row>
-      {/* <Row className="bg-dark text-white"> */}
-      <div className="p-2 bg-dark text-white d-flex align-content-end justify-items-end ">
-        <label>&copy; 2024 Boya Fit. All rights reserved.</label>
+      <hr />
+      <Row
+        className="mt-2 mb-2"
+        style={{ maxWidth: "100%", overflowX: "hidden" }}
+      >
+        <h2 className="text-center mb-2">Latest Reviews</h2>
+        <HorizontalScroller items={ratings} />
+      </Row>
+      <hr />
+      <Row>
+        <h2 className="text-center mb-2">Weekly Most Active Users</h2>
+        <br />
+        <FaMedal size={25} color="gold" />
+        <ActiveUsers />
+      </Row>
+      <div className="mt-2 pt-2 pb-2 bg-dark text-white d-flex align-content-end  ">
+        <label className="ms-5">
+          &copy; 2024 Boya Fit. All rights reserved.
+        </label>
       </div>
-      {/* </Row> */}
     </Container>
   );
 }

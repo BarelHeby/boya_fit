@@ -2,8 +2,8 @@
     position: relative;
     min-width: 30%;
     height: 120px;
-    animation: transform 100s linear infinite alternate;
-    overflow-y: auto;
+    animation: transform 1500s linear infinite alternate;
+    overflow-y: hidden;
 }
 
 
@@ -12,6 +12,6 @@
         transform: translateX(350%);
     }
     100% {
-        transform: translateX(-1000%);
+        transform: translateX(-20000%);
     }
 }

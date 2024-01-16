@@ -83,4 +83,13 @@ export default class User extends Entity {
     }
     return [];
   }
+  static async getActive() {
+    const resp = await super.get("users", "active/6");
+    console.log(resp);
+    if (resp.status === 200) {
+      return resp.data.map((user) => {
+        return { user: User.fromJson(user.user), count: user.count };
+      });
+    }
+  }
 }

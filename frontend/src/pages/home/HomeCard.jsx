@@ -10,11 +10,7 @@ function HomeCard({ path: { to, label, description, icon }, index }) {
       </Card.Header>
       <Card.Body>
         <Card.Text>{description}</Card.Text>
-        <Button
-          variant="dark"
-          className="pump"
-          onClick={() => (window.location.href = to)}
-        >
+        <Button variant="dark" onClick={() => (window.location.href = to)}>
           Go
         </Button>
       </Card.Body>

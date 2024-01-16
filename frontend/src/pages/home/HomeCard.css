@@ -9,15 +9,27 @@
     transform: translateX(200%);
     animation: slideInRight 1.5s forwards;
 }
+.boyaHeader{
+    position: absolute;
+    text-align: center;
+    margin-top: 10px;
 
+}
+.boyaHeaderSlogen{
+    /* position: absolute;
+    top: 100;
+    left: 0;
+    margin-top: 130px; */
+    font-size: 30px;
+}
 .topToPlace{
-    position: relative;
+    /* position: relative; */
     transform: translateY(-100%);
     animation: slideInTop 1.5s forwards;
 }
 @keyframes slideInTop {
     0% {
-        transform: translateY(-100%);
+        transform: translateY(-200%);
     }
     100% {
         transform: translateY(0);
