@@ -1,0 +1,42 @@
+.homeCardLeft {
+    position: relative;
+    transform: translateX(-100%);
+    animation: slideInLeft 1.5s forwards;
+}
+
+.homeCardRight {
+    position: relative;
+    transform: translateX(200%);
+    animation: slideInRight 1.5s forwards;
+}
+
+.topToPlace{
+    position: relative;
+    transform: translateY(-100%);
+    animation: slideInTop 1.5s forwards;
+}
+@keyframes slideInTop {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+@keyframes slideInLeft {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(200%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
