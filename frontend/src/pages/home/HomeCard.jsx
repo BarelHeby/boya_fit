@@ -1,13 +1,20 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
 import "./HomeCard.css";
-function HomeCard({ path: { to, label, description }, index }) {
+function HomeCard({ path: { to, label, description, icon }, index }) {
   return (
-    <Card >
-      <Card.Header as="h5">{label}</Card.Header>
+    <Card>
+      <Card.Header className="d-flex justify-content-between align-content-center mt-1">
+        <h5 className="">{label}</h5>
+        {icon}
+      </Card.Header>
       <Card.Body>
         <Card.Text>{description}</Card.Text>
-        <Button className="" onClick={() => (window.location.href = to)}>
+        <Button
+          variant="dark"
+          className="pump"
+          onClick={() => (window.location.href = to)}
+        >
           Go
         </Button>
       </Card.Body>

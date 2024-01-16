@@ -35,6 +35,7 @@ class Rating:
         return Rating(user_id, exercise_id, exercise_name, rating, description, time)
 
     def get(user_id: int):
+        args = []
         query = """
         SELECT 
             UserId,
@@ -47,11 +48,16 @@ class Rating:
             Rating,
             Exercises
         WHERE
-            UserId = %s
-        AND
             Exercises.Id = Rating.ExerciseId
+        """
+        if user_id is not None:
+            query += "AND  UserId = %s "
+            args.append(user_id)
+
+        query += """
+        
         ORDER BY
             Time DESC
         """
-        res = DbManager.query(query, [user_id])
+        res = DbManager.query(query, args)
         return [Rating.create_from_query_row(row) for row in res]
