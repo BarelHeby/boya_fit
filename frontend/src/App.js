@@ -1,14 +1,12 @@
 import "./App.css";
 import User from "./pages/User/Index";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
 import NavBar from "./components/navbar";
-import { createBrowserRouter, Route, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Users from "./pages/users";
 import Login from "./pages/login";
 import Home from "./pages/home";
 function App() {
-  const [user, setUser] = useState(null);
   const router = createBrowserRouter([
     { path: "/", element: <Home /> },
     { path: "/users", element: <Users /> },
