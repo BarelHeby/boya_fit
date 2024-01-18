@@ -1,3 +1,3 @@
 import os
 os.system("pip install -r requirements.txt")
-os.system("python Main.py")
+os.system("python3 Main.py")

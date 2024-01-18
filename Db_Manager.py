@@ -21,7 +21,7 @@ class DbManager:
     def _connect(self):
         load_dotenv()
         cnx = mysql.connector.connect(
-            user='root',
+            user='rika',
             password=os.getenv('MYSQL_ROOT_PASSWORD'),
             host='127.0.0.1',
         )

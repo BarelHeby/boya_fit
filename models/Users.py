@@ -14,7 +14,7 @@ class User:
         self.id = id
         self.picture = picture
         self.latitude = latitude
-        self.longitude = longitude
+        self.longitude = longitude 
 
     def set_query_func(self, query_func: callable):
         self._query_func = query_func
