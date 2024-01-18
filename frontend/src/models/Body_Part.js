@@ -16,7 +16,8 @@ export default class BodyPart extends Entity {
       name: this.name,
     };
   }
-  fromJson(json) {
+  static fromJson(json) {
+    if (!json) return null;
     return new BodyPart(json.id, json.name);
   }
   add() {

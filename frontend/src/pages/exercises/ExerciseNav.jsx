@@ -1,7 +1,9 @@
 import React from "react";
 import { Navbar } from "react-bootstrap";
 import { Nav } from "react-bootstrap";
+import "./exerciseCard.css";
 function ExerciseNav() {
+    
   const bodyParts = [
     "All",
     "Chest",
@@ -19,7 +21,7 @@ function ExerciseNav() {
       {bodyParts.map((bodyPart, index) => {
         return (
           <Nav.Link
-            className="me-5  "
+            className="me-5  serif"
             href={`/exercises/${bodyPart}`}
             key={index}
           >

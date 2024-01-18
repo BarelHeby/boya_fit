@@ -1,4 +1,7 @@
 import Entity from "./Entity";
+import Muscle from "./Muscle";
+import BodyPart from "./Body_Part";
+import Equipment from "./Eqipment";
 export default class Exercise extends Entity {
   /**
    *
@@ -19,7 +22,11 @@ export default class Exercise extends Entity {
     timeSeconds,
     equipmentId,
     bodyPartId,
-    instructions
+    instructions,
+    bodyPartName = null,
+    equipmentName = null,
+    muscles = null,
+    rating = null
   ) {
     super("exercises");
     this.id = id;
@@ -30,6 +37,11 @@ export default class Exercise extends Entity {
     this.equipmentId = equipmentId;
     this.bodyPartId = bodyPartId;
     this.instructions = instructions;
+    this.bodyPartName = bodyPartName;
+    this.equipmentName = equipmentName;
+    this.muscles = muscles;
+    this.bodyPartName = bodyPartName;
+    this.rating = rating;
   }
   addInstruction(instruction) {
     this.instructions.push(instruction);
@@ -55,8 +67,19 @@ export default class Exercise extends Entity {
       json.time_seconds,
       json.equipmentId,
       json.bodyPartId,
-      json.instructions
+      json.instructions,
+      json.body_part_name,
+      json.equipment_name,
+      null,
+      json.rating
     );
+  }
+  static async get(id = null) {
+    const resp = await super.get("exercises", id);
+    if (resp.status === 200) {
+      return resp.data.map((exercise) => Exercise.fromJson(exercise));
+    }
+    return [];
   }
   add() {
     return super.add(this.toJson());

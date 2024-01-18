@@ -16,7 +16,8 @@ export default class Eqipments extends Entity {
       name: this.name,
     };
   }
-  fromJson(json) {
+  static fromJson(json) {
+    if (!json) return null;
     return new Eqipments(json.id, json.name);
   }
   add() {
