@@ -19,7 +19,7 @@ class User:
         self.longitude = longitude
 
     def from_json(json, id=None):
-        return User(json["name"], json["email"], json["password"], json["fitness_level"], json["weight"], json["height"], json["picture"], json["latitude"], json["longitude"], id=id)
+        return User(json["name"], json["email"], json["password"], json["fitnessLevel"], json["weight"], json["height"], json["picture"], json["latitude"], json["longitude"], id=id)
 
     def to_json(self):
         return {

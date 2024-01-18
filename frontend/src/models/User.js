@@ -38,7 +38,9 @@ export default class User extends Entity {
       fitnessLevel: this.fitnessLevel,
       weight: this.weight,
       height: this.height,
-      picture: this.picture,
+      picture: "https://picsum.photos/200/300",
+      latitude: 0,
+      longitude: 0,
     };
   }
   static fromJson(json) {
@@ -60,8 +62,26 @@ export default class User extends Entity {
     }
     return [];
   }
-  add() {
-    return super.add(this.toJson());
+  static async add(
+    name,
+    email,
+    password,
+    fitnessLevel,
+    weight,
+    height,
+    picture
+  ) {
+    const u = new User(
+      null,
+      name,
+      email,
+      password,
+      fitnessLevel,
+      weight,
+      height,
+      picture
+    );
+    return super.add(u.modelEndPointUrl, u.toJson());
   }
   delete() {
     return super.delete(this.id);
