@@ -6,7 +6,7 @@ from db.Db_Manager import DbManager
 
 
 class Exercise:
-    def __init__(self, name: str, difficulty: int, calories: int, time_seconds: int, equipment_id: int, body_part_id: int, instructions: list,  id=None) -> None:
+    def __init__(self, name: str, difficulty: int, calories: int, time_seconds: int, equipment_id: int, body_part_id: int, instructions: list, body_part_name: str, equipment_name: str, rating=None, id=None) -> None:
         self.name = name
         self.difficulty = difficulty
         self.calories = calories
@@ -15,6 +15,9 @@ class Exercise:
         self.body_part_id = body_part_id
         self.instructions = instructions
         self.id = id
+        self.body_part_name = body_part_name
+        self.rating = rating
+        self.equipment_name = equipment_name
 
     def create_from_query_row(row):
         id = row[0]
@@ -25,7 +28,10 @@ class Exercise:
         equipment_id = row[5]
         body_part_id = row[6]
         instructions = row[7].split("###")
-        return Exercise(name, difficulty, calories, time_seconds, equipment_id, body_part_id, instructions, id=id)
+        body_part_name = row[8]
+        equipment_name = row[9]
+        rating = row[10]
+        return Exercise(name, difficulty, calories, time_seconds, equipment_id, body_part_id, instructions, body_part_name, equipment_name, rating, id=id)
 
     def from_json(json, id=None):
         name = json["name"]
@@ -46,22 +52,41 @@ class Exercise:
             "time_seconds": self.time_seconds,
             "equipment_id": self.equipment_id,
             "body_part_id": self.body_part_id,
-            "instructions": self.instructions
+            "instructions": self.instructions,
+            "body_part_name": self.body_part_name,
+            "equipment_name": self.equipment_name,
+            "rating": self.rating
         }
 
     def get(id=None):
         query = """
         SELECT 
-            Id,
-            Name,
-            Difficulty,
-            Calories,
-            TimeSeconds,
-            EquipmentId,
-            BodyPartId,
-            Instructions
+            Exercises.Id Id,
+            Exercises.Name Name,
+            Exercises.Difficulty Difficulty,
+            Exercises.Calories Calories,
+            Exercises.TimeSeconds TimeSeconds,
+            Exercises.EquipmentId EquipmentId,
+            Exercises.BodyPartId BodyPartId,
+            Exercises.Instructions Instructions,
+            Body_Parts.Name BodyPartName,
+            Equipments.Name EquipmentName,
+            avg(Rating.Rating) rating
         FROM 
-            Exercises
+            Exercises,
+            Body_Parts,
+            Rating,
+            Equipments
+        WHERE
+	        Exercises.BodyPartId = Body_Parts.Id
+        AND
+            Rating.ExerciseId = Exercises.Id
+        AND
+	        Equipments.Id = Exercises.EquipmentId
+        GROUP BY
+            1,2,3,4,5,6,7,8,9,10
+        ORDER BY
+            11 DESC
         """
         variables = []
         if id != None:
