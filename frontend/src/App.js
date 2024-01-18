@@ -14,7 +14,7 @@ function App() {
     { path: "/login", element: <Login /> },
   ]);
   return (
-    <div className="App">
+    <div className="App w-100 overflow-hidden">
       <NavBar />
       <RouterProvider router={router} />
     </div>

@@ -58,6 +58,8 @@ class Rating:
         
         ORDER BY
             Time DESC
+        limit
+            100
         """
         res = DbManager.query(query, args)
         return [Rating.create_from_query_row(row) for row in res]

@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "react-bootstrap";
 function ReviewScrollItem({ rating }) {
   const stars = [];
-  for (let i = 0; i < rating.rating; i++) {
+  for (let i = 0; i < rating?.rating; i++) {
     stars.push(
       <span key={i} style={{ fontSize: "20px" }}>
         &#9733;
@@ -13,7 +13,7 @@ function ReviewScrollItem({ rating }) {
     <Card>
       <Card.Body>
         <div className="d-flex justify-content-between align-items-center ">
-          <small className="pt-0">{rating.time.substr(0, 10)}</small>
+          <small className="pt-0">{rating?.time.substr(0, 10)}</small>
           <div style={{ color: "gold" }}>{stars}</div>
         </div>
         <Card.Title
