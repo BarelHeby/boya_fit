@@ -150,3 +150,28 @@ class Exercise:
               self.body_part_id,
               instructions_text,
               self.id])
+
+    def get_by_category(category):
+        variables = []
+        query = """
+        with Ranked_Exercises as (
+            SELECT *,
+            ROW_NUMBER() OVER (partition by BodyPartId Order By BodyPartId) as RowNum
+            FROM Exercises
+        )
+        select
+            ev.*
+        from
+            Ranked_Exercises re,
+            Exercises_View ev
+        where
+            re.Id = ev.Id
+        
+        """
+        if category != None:
+            query += f" AND lower(ev.BodyPartName) = lower( %s ) "
+            variables.append(category)
+        else:
+            query += " and re.RowNum <=10"
+        resp = DbManager.query(query, variables)
+        return [Exercise.create_from_query_row(row) for row in resp]

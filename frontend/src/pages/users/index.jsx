@@ -27,7 +27,7 @@ function Users() {
   }
   return (
     <Container>
-      <h1>Users</h1>
+      <h1 className="text-center">Users</h1>
       <Row className="d-flex justify-content-center">
         <Col xs={10}>
           <Form.Control
@@ -43,7 +43,7 @@ function Users() {
               xs={6}
               md={4}
               lg={2}
-              className=" me-2 mt-2 bg-dark text-white rounded"
+              className=" me-2 mt-2 bg-dark border-white border text-white  rounded"
               key={index}
             >
               <UserCard user={user} />

@@ -33,3 +33,9 @@ class ExerciseView(APIView):
             return Response(exercise.to_json(), status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ExerciseCategoryView(APIView):
+    def get(self, request, category=None):
+        exercises = Exercise.get_by_category(category)
+        return Response([exercise.to_json() for exercise in exercises], status=status.HTTP_200_OK)

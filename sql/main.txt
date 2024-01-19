@@ -163,3 +163,31 @@ order by
 
 CREATE  OR REPLACE VIEW `Users_View` AS
 SELECT Id,Name,Email,Password,FitnessLevel,Weight,Height,Picture,ST_X(Latlon) x,ST_Y(Latlon) y FROM Users;
+
+
+CREATE  OR REPLACE VIEW `Exercises_View` AS
+	SELECT 
+            Exercises.Id Id,
+            Exercises.Name Name,
+            Exercises.Difficulty Difficulty,
+            Exercises.Calories Calories,
+            Exercises.TimeSeconds TimeSeconds,
+            Exercises.EquipmentId EquipmentId,
+            Exercises.BodyPartId BodyPartId,
+            Exercises.Instructions Instructions,
+            Body_Parts.Name BodyPartName,
+            Equipments.Name EquipmentName,
+            avg(Rating.Rating) rating
+        FROM 
+            Exercises,
+            Body_Parts,
+            Rating,
+            Equipments
+        WHERE
+	        Exercises.BodyPartId = Body_Parts.Id
+        AND
+            Rating.ExerciseId = Exercises.Id
+        AND
+	        Equipments.Id = Exercises.EquipmentId
+        GROUP BY
+            1,2,3,4,5,6,7,8,9,10;

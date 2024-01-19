@@ -17,6 +17,7 @@ function App() {
     { path: "/users/:id", element: <User /> },
     { path: "/login", element: <Login /> },
     { path: "/Exercises", element: <Exercises /> },
+    { path: "/Exercises/:category", element: <Exercises /> },
   ]);
   return (
     <div className="App w-100 overflow-hidden">

@@ -13,3 +13,65 @@
         transform: scale(1);
     }
 }
+
+.pointer{
+    cursor: pointer;
+}
+
+.topToPlace{
+    /* position: relative; */
+    transform: translateY(-100%);
+    animation: slideInTop 1.5s forwards;
+}
+@keyframes slideInTop {
+    0% {
+        transform: translateY(-200%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+.slideInLeft {
+    position: relative;
+    transform: translateX(-100%);
+    animation: slideInLeft 1.5s forwards;
+}
+
+.slideInRight {
+    position: relative;
+    transform: translateX(200%);
+    animation: slideInRight 1.5s forwards;
+}
+
+@keyframes slideInLeft {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(200%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+*::-webkit-scrollbar {
+    width: 5px; /* Adjust scrollbar width */
+}
+
+*::-webkit-scrollbar-track {
+    background: transparent; /* Make the track transparent */
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: black; /* Make the handle black */
+    border-radius: 20px; /* Optional: Add border radius for roundness */
+}

@@ -5,8 +5,8 @@ function UserCard({ user }) {
     <div className=" text-center align-content-center ">
       <img
         src={user.picture}
-        width={60}
-        height={60}
+        width={100}
+        height={100}
         className="rounded-circle mt-5 pointer"
         alt="user"
         onClick={() => (window.location.href = `/users/${user.id}`)}
