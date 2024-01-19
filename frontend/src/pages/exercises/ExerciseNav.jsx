@@ -15,7 +15,14 @@ function ExerciseNav({ setCategory, category, categories }) {
             href={`/exercises/${bodyPart}`}
             key={index}
           >
-            <h3 className={bodyPart === category ? "scale-3 underscore" : ""}>
+            <h3
+              className={
+                bodyPart === category ||
+                (!category && bodyPart.toLowerCase() === "all")
+                  ? "scale-3 underscore"
+                  : ""
+              }
+            >
               {bodyPart}
             </h3>
           </Nav.Link>
