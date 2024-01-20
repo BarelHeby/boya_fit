@@ -14,7 +14,7 @@ function ActiveUsers() {
 
   return (
     <>
-      {users.map(({ user, count }, index) => (
+      {users?.map(({ user, count }, index) => (
         <Col
           xs={2}
           key={index}
