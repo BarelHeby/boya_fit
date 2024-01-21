@@ -32,7 +32,7 @@ function Home() {
       icon: <FaUsers size={25} />,
     },
     {
-      to: "/exercises/",
+      to: "/exercises/All",
       label: "Explore Exercises",
       description:
         "Experience our top-notch exercises, meticulously designed to boost your fitness and enhance your strength. Join us for a healthier lifestyle.",
