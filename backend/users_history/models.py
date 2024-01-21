@@ -39,7 +39,7 @@ class UsersHistory:
         exercise_instructions = row[9].split("###")
         body_part = row[10]
         e = Exercise(exercise_name, exercise_difficulty, exercise_calories, exercise_time_seconds,
-                     exercise_equipment_id, exercise_body_part_id, exercise_instructions, id=exercise_id)
+                     exercise_equipment_id, exercise_body_part_id, exercise_instructions, body_part, None, id=exercise_id)
         return UsersHistory(user_id, time, e, body_part)
 
     def to_json(self):
