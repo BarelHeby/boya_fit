@@ -18,9 +18,10 @@ export default class Muscle extends Entity {
       bodyPartId: this.bodyPartId,
     };
   }
-  fromJson(json) {
+  static fromJson(json) {
     return new Muscle(json.id, json.name, json.bodyPartId);
   }
+  static async get(exerciseId) {}
   add() {
     return super.add(this.toJson());
   }

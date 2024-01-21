@@ -31,6 +31,11 @@ class Exercise:
         body_part_name = row[8]
         equipment_name = row[9]
         rating = row[10]
+        if len(row) > 11:
+            muscleId = row[11]
+            muscleName = row[12]    
+            priority = row[13]
+            m = 
         return Exercise(name, difficulty, calories, time_seconds, equipment_id, body_part_id, instructions, body_part_name, equipment_name, rating, id=id)
 
     def from_json(json, id=None):
@@ -59,38 +64,60 @@ class Exercise:
         }
 
     def get(id=None):
-        query = """
-        SELECT 
-            Exercises.Id Id,
-            Exercises.Name Name,
-            Exercises.Difficulty Difficulty,
-            Exercises.Calories Calories,
-            Exercises.TimeSeconds TimeSeconds,
-            Exercises.EquipmentId EquipmentId,
-            Exercises.BodyPartId BodyPartId,
-            Exercises.Instructions Instructions,
-            Body_Parts.Name BodyPartName,
-            Equipments.Name EquipmentName,
-            avg(Rating.Rating) rating
-        FROM 
-            Exercises,
-            Body_Parts,
-            Rating,
-            Equipments
-        WHERE
-	        Exercises.BodyPartId = Body_Parts.Id
-        AND
-            Rating.ExerciseId = Exercises.Id
-        AND
-	        Equipments.Id = Exercises.EquipmentId
-        GROUP BY
-            1,2,3,4,5,6,7,8,9,10
-        ORDER BY
-            11 DESC
-        """
+        print(id)
+        if id == None:
+            query = f"""
+            SELECT 
+                Exercises.Id Id,
+                Exercises.Name Name,
+                Exercises.Difficulty Difficulty,
+                Exercises.Calories Calories,
+                Exercises.TimeSeconds TimeSeconds,
+                Exercises.EquipmentId EquipmentId,
+                Exercises.BodyPartId BodyPartId,
+                Exercises.Instructions Instructions,
+                Body_Parts.Name BodyPartName,
+                Equipments.Name EquipmentName,
+                avg(Rating.Rating) rating
+            FROM 
+                Exercises,
+                Body_Parts,
+                Rating,
+                Equipments
+            WHERE
+                Exercises.BodyPartId = Body_Parts.Id
+            {f" AND Exercises.Id = %s " if id != None else ""}
+            AND
+                Rating.ExerciseId = Exercises.Id
+            AND
+                Equipments.Id = Exercises.EquipmentId
+            GROUP BY
+                1,2,3,4,5,6,7,8,9,10
+            ORDER BY
+                11 DESC
+            """
+        else:
+            query = f"""
+            SELECT
+                e.*,
+                m.Id 	MuscleId ,
+                m.Name 	MuscleName,
+                em.Priority Priority
+            FROM
+                Exercises_View e,
+                Muscles m ,
+                Excercise_Muscles em
+            WHERE
+                e.Id = em.ExerciseId
+            AND
+                m.Id = em.MuscleId
+            AND
+                e.Id = %s
+            ORDER BY
+                em.Priority"""
         variables = []
         if id != None:
-            query += f" WHERE Id= %s "
+            # query += f" WHERE Id= %s "
             variables.append(id)
         resp = DbManager.query(query, variables)
         return [Exercise.create_from_query_row(row) for row in resp]

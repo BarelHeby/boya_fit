@@ -77,6 +77,20 @@ export default class Exercise extends Entity {
   static async get(id = null) {
     const resp = await super.get("exercises", id);
     if (resp.status === 200) {
+      if (id) {
+        const muscles = [];
+        resp.data.map((exercise) => {
+          muscles.push(
+            Muscle.fromJson({
+              id: exercise.MuscleName,
+              name: exercise.MuscleName,
+              bodyPartId: exercise.bodyPartId,
+            })
+          );
+        });
+        console.log(muscles);
+        console.log(resp.data);
+      }
       return resp.data.map((exercise) => Exercise.fromJson(exercise));
     }
     return [];
