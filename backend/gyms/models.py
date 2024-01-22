@@ -6,11 +6,9 @@ from db.Db_Manager import DbManager
 
 
 class Gym:
-    def __init__(self, name: str, adress: str, city: str, zip: str, country: str, country_short_code: str, is_kids: bool, is_active: bool, logo_photo: str, lat: float, lan: float, id=None, distance: float = None) -> None:
+    def __init__(self, name: str,  city: str, country: str, country_short_code: str, is_kids: bool, is_active: bool, logo_photo: str, lat: float, lan: float, id=None, distance: float = None) -> None:
         self.name = name
-        self.adress = adress
         self.city = city
-        self.zip = zip
         self.country = country
         self.country_short_code = country_short_code
         self.is_kids = is_kids
@@ -34,7 +32,9 @@ class Gym:
             "is_active": self.is_active,
             "logo_photo": self.logo_photo,
             "lat": self.lat,
-            "lan": self.lan
+            "lan": self.lan,
+            "id": self.id,
+            "distance": self.distance
         }
 
     def create_from_query_row(row):

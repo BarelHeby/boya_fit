@@ -9,6 +9,7 @@ export default class Gym extends Entity {
     isKids,
     isActive,
     logo,
+    id = null,
     distance = null
   ) {
     super("gyms");
@@ -20,6 +21,7 @@ export default class Gym extends Entity {
     this.isActive = isActive;
     this.logo = logo;
     this.distance = distance;
+    this.id = id;
   }
   toJson() {
     return {
@@ -37,10 +39,12 @@ export default class Gym extends Entity {
       json.name,
       json.city,
       json.country,
-      json.countryShortCode,
-      json.isKids,
-      json.isActive,
-      json.logo
+      json.country_short_code,
+      json.is_kids,
+      json.is_active,
+      json.logo_photo,
+      json.id,
+      json.distance
     );
   }
   static async get_by_user_exercise(userId, exerciseId) {
