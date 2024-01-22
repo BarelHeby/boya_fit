@@ -208,3 +208,8 @@ CREATE  OR REPLACE VIEW `Exercises_Full_View` AS
 		m.Id = em.MuscleId
 	ORDER BY
 		em.Priority;
+
+
+CREATE TABLE `boya_fit_1`.`Gyms_Equipments` (
+  `GymId` INT NOT NULL,
+  `EquipmentId` INT NOT NULL);

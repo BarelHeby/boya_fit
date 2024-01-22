@@ -53,7 +53,7 @@ function ExecrciseCard({ exercise }) {
         <FaArrowCircleRight
           size={30}
           className="pump pointer mb-1"
-          onClick={() => (window.location.href = `/exercises/${exercise.id}`)}
+          onClick={() => (window.location.href = `/exercises/s/${exercise.id}`)}
         />
       </Card.Footer>
     </Card>

@@ -25,7 +25,7 @@ export default class Exercise extends Entity {
     instructions,
     bodyPartName = null,
     equipmentName = null,
-    muscles = null,
+    muscles = [],
     rating = null
   ) {
     super("exercises");
@@ -56,6 +56,7 @@ export default class Exercise extends Entity {
       equipmentId: this.equipmentId,
       bodyPartId: this.bodyPartId,
       instructions: this.instructions,
+      muscles: this.muscles,
     };
   }
   static fromJson(json) {
@@ -70,27 +71,14 @@ export default class Exercise extends Entity {
       json.instructions,
       json.body_part_name,
       json.equipment_name,
-      null,
+      json.muscles,
       json.rating
     );
   }
   static async get(id = null) {
     const resp = await super.get("exercises", id);
     if (resp.status === 200) {
-      if (id) {
-        const muscles = [];
-        resp.data.map((exercise) => {
-          muscles.push(
-            Muscle.fromJson({
-              id: exercise.MuscleName,
-              name: exercise.MuscleName,
-              bodyPartId: exercise.bodyPartId,
-            })
-          );
-        });
-        console.log(muscles);
-        console.log(resp.data);
-      }
+      console.log(resp.data);
       return resp.data.map((exercise) => Exercise.fromJson(exercise));
     }
     return [];

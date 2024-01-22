@@ -3,10 +3,11 @@
 # Create your models here.
 from random import randint, randrange
 from db.Db_Manager import DbManager
+from muscles.models import Muscle
 
 
 class Exercise:
-    def __init__(self, name: str, difficulty: int, calories: int, time_seconds: int, equipment_id: int, body_part_id: int, instructions: list, body_part_name: str, equipment_name: str, rating=None, id=None) -> None:
+    def __init__(self, name: str, difficulty: int, calories: int, time_seconds: int, equipment_id: int, body_part_id: int, instructions: list, body_part_name: str = None, equipment_name: str = None, rating=None, id=None, muscles: list[Muscle] = None) -> None:
         self.name = name
         self.difficulty = difficulty
         self.calories = calories
@@ -18,6 +19,10 @@ class Exercise:
         self.body_part_name = body_part_name
         self.rating = rating
         self.equipment_name = equipment_name
+        self.muscles = muscles
+
+    def set_muscles(self, muscles=list[Muscle]):
+        self.muscles = muscles
 
     def create_from_query_row(row):
         id = row[0]
@@ -33,10 +38,10 @@ class Exercise:
         rating = row[10]
         if len(row) > 11:
             muscleId = row[11]
-            muscleName = row[12]    
+            muscleName = row[12]
             priority = row[13]
-            m = 
-        return Exercise(name, difficulty, calories, time_seconds, equipment_id, body_part_id, instructions, body_part_name, equipment_name, rating, id=id)
+            m = Muscle(muscleName, body_part_id, muscleId, priority=priority)
+        return Exercise(name, difficulty, calories, time_seconds, equipment_id, body_part_id, instructions, body_part_name, equipment_name, rating, id=id, muscles=[m] if len(row) > 11 else None)
 
     def from_json(json, id=None):
         name = json["name"]
@@ -60,7 +65,8 @@ class Exercise:
             "instructions": self.instructions,
             "body_part_name": self.body_part_name,
             "equipment_name": self.equipment_name,
-            "rating": self.rating
+            "rating": self.rating,
+            "muscles": [m.to_json() for m in self.muscles] if self.muscles != None else []
         }
 
     def get(id=None):
@@ -96,6 +102,8 @@ class Exercise:
             ORDER BY
                 11 DESC
             """
+            resp = DbManager.query(query)
+            return [Exercise.create_from_query_row(row) for row in resp]
         else:
             query = f"""
             SELECT
@@ -115,12 +123,15 @@ class Exercise:
                 e.Id = %s
             ORDER BY
                 em.Priority"""
-        variables = []
-        if id != None:
-            # query += f" WHERE Id= %s "
-            variables.append(id)
-        resp = DbManager.query(query, variables)
-        return [Exercise.create_from_query_row(row) for row in resp]
+            variables = [id]
+            resp = DbManager.query(query, variables)
+            if len(resp) == 0:
+                return []
+            muscles = [Muscle(row[12], row[6], row[11], row[13])
+                       for row in resp]
+            ex = Exercise.create_from_query_row(resp[0])
+            ex.set_muscles(muscles)
+            return [ex]
 
     def is_exist(name):
         return DbManager.query(

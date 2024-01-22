@@ -1,6 +1,7 @@
 from random import randint, randrange
 import pandas as pd
 
+
 class Gyms:
     def __init__(self, Id: int, Name: str, Adress: str, City: str, Zip: str, Country: str, CountryShortCode: str, IsKids: int, IsActive: int, Logo_Photo: str, Latlon: str, query_func: callable = None) -> None:
         self.Id = Id
@@ -16,7 +17,7 @@ class Gyms:
         self.Latlon = Latlon
         self._query_func = query_func
 
-    def rowToData( row: pd.Series,query_func:callable) -> None:
+    def rowToData(row: pd.Series, query_func: callable) -> None:
         Id = int(row["Id"])
         Name = row["Name"]
         Adress = row["Adress"]
@@ -28,8 +29,7 @@ class Gyms:
         IsActive = int(row["IsActive"])
         Logo_Photo = row["Logo_Photo"]
         Latlon = row["Latlon"]
-        return Gyms(Id,Name,Adress,City,Zip,Country,CountryShortCode,IsKids,IsActive,Logo_Photo,Latlon,query_func)
-        
+        return Gyms(Id, Name, Adress, City, Zip, Country, CountryShortCode, IsKids, IsActive, Logo_Photo, Latlon, query_func)
 
     def create_from_query_row(row):
         Id = row[0]
@@ -43,7 +43,7 @@ class Gyms:
         IsActive = row[8]
         Logo_Photo = row[9]
         Latlon = row[10]
-        return Gyms(Id, Name, Adress,City,Zip,Country,CountryShortCode,IsKids,IsActive,Logo_Photo,Latlon)
+        return Gyms(Id, Name, Adress, City, Zip, Country, CountryShortCode, IsKids, IsActive, Logo_Photo, Latlon)
 
     def get(query_func: callable, id=None):
         query = "SELECT * FROM Gyms"
@@ -60,11 +60,13 @@ class Gyms:
             f"SELECT Id FROM Gyms WHERE Name = %s", [name])
 
     def insert(self):
-        numbers = [0,0] if len(self.Latlon.split(','))!=2 else self.Latlon.split(',')
+        numbers = [0, 0] if len(self.Latlon.split(
+            ',')) != 2 else self.Latlon.split(',')
+        numbers = [float(numbers[0])/90, float(numbers[1])/90]
         return self._query_func("""
                 INSERT INTO 
-                gyms 
+                Gyms 
                     (Name,Adress,City,Zip,Country,CountryShortCode,IsKids,IsActive,Logo_Photo,Latlon) 
                 VALUES 
                 (%s,%s,%s,%s,%s,%s,%s,%s,%s,ST_GeomFromText('POINT(%s %s)'))""",
-                                    [self.Name,self.Adress,self.City,self.Zip,self.Country,self.CountryShortCode,self.IsKids,self.IsActive,self.Logo_Photo,float(numbers[0]),float(numbers[1])], True)
+                                [self.Name, self.Adress, self.City, self.Zip, self.Country, self.CountryShortCode, self.IsKids, self.IsActive, self.Logo_Photo, float(numbers[0]), float(numbers[1])], True)
