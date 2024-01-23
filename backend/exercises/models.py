@@ -3,10 +3,11 @@
 # Create your models here.
 from random import randint, randrange
 from db.Db_Manager import DbManager
+from muscles.models import Muscle
 
 
 class Exercise:
-    def __init__(self, name: str, difficulty: int, calories: int, time_seconds: int, equipment_id: int, body_part_id: int, instructions: list, body_part_name: str, equipment_name: str, rating=None, id=None) -> None:
+    def __init__(self, name: str, difficulty: int, calories: int, time_seconds: int, equipment_id: int, body_part_id: int, instructions: list, body_part_name: str = None, equipment_name: str = None, rating=None, id=None, muscles: list[Muscle] = None) -> None:
         self.name = name
         self.difficulty = difficulty
         self.calories = calories
@@ -18,6 +19,10 @@ class Exercise:
         self.body_part_name = body_part_name
         self.rating = rating
         self.equipment_name = equipment_name
+        self.muscles = muscles
+
+    def set_muscles(self, muscles=list[Muscle]):
+        self.muscles = muscles
 
     def create_from_query_row(row):
         id = row[0]
@@ -31,7 +36,12 @@ class Exercise:
         body_part_name = row[8]
         equipment_name = row[9]
         rating = row[10]
-        return Exercise(name, difficulty, calories, time_seconds, equipment_id, body_part_id, instructions, body_part_name, equipment_name, rating, id=id)
+        if len(row) > 11:
+            muscleId = row[11]
+            muscleName = row[12]
+            priority = row[13]
+            m = Muscle(muscleName, body_part_id, muscleId, priority=priority)
+        return Exercise(name, difficulty, calories, time_seconds, equipment_id, body_part_id, instructions, body_part_name, equipment_name, rating, id=id, muscles=[m] if len(row) > 11 else None)
 
     def from_json(json, id=None):
         name = json["name"]
@@ -55,45 +65,73 @@ class Exercise:
             "instructions": self.instructions,
             "body_part_name": self.body_part_name,
             "equipment_name": self.equipment_name,
-            "rating": self.rating
+            "rating": self.rating,
+            "muscles": [m.to_json() for m in self.muscles] if self.muscles != None else []
         }
 
     def get(id=None):
-        query = """
-        SELECT 
-            Exercises.Id Id,
-            Exercises.Name Name,
-            Exercises.Difficulty Difficulty,
-            Exercises.Calories Calories,
-            Exercises.TimeSeconds TimeSeconds,
-            Exercises.EquipmentId EquipmentId,
-            Exercises.BodyPartId BodyPartId,
-            Exercises.Instructions Instructions,
-            Body_Parts.Name BodyPartName,
-            Equipments.Name EquipmentName,
-            avg(Rating.Rating) rating
-        FROM 
-            Exercises,
-            Body_Parts,
-            Rating,
-            Equipments
-        WHERE
-	        Exercises.BodyPartId = Body_Parts.Id
-        AND
-            Rating.ExerciseId = Exercises.Id
-        AND
-	        Equipments.Id = Exercises.EquipmentId
-        GROUP BY
-            1,2,3,4,5,6,7,8,9,10
-        ORDER BY
-            11 DESC
-        """
-        variables = []
-        if id != None:
-            query += f" WHERE Id= %s "
-            variables.append(id)
-        resp = DbManager.query(query, variables)
-        return [Exercise.create_from_query_row(row) for row in resp]
+        print(id)
+        if id == None:
+            query = f"""
+            SELECT 
+                Exercises.Id Id,
+                Exercises.Name Name,
+                Exercises.Difficulty Difficulty,
+                Exercises.Calories Calories,
+                Exercises.TimeSeconds TimeSeconds,
+                Exercises.EquipmentId EquipmentId,
+                Exercises.BodyPartId BodyPartId,
+                Exercises.Instructions Instructions,
+                Body_Parts.Name BodyPartName,
+                Equipments.Name EquipmentName,
+                avg(Rating.Rating) rating
+            FROM 
+                Exercises,
+                Body_Parts,
+                Rating,
+                Equipments
+            WHERE
+                Exercises.BodyPartId = Body_Parts.Id
+            {f" AND Exercises.Id = %s " if id != None else ""}
+            AND
+                Rating.ExerciseId = Exercises.Id
+            AND
+                Equipments.Id = Exercises.EquipmentId
+            GROUP BY
+                1,2,3,4,5,6,7,8,9,10
+            ORDER BY
+                11 DESC
+            """
+            resp = DbManager.query(query)
+            return [Exercise.create_from_query_row(row) for row in resp]
+        else:
+            query = f"""
+            SELECT
+                e.*,
+                m.Id 	MuscleId ,
+                m.Name 	MuscleName,
+                em.Priority Priority
+            FROM
+                Exercises_View e,
+                Muscles m ,
+                Excercise_Muscles em
+            WHERE
+                e.Id = em.ExerciseId
+            AND
+                m.Id = em.MuscleId
+            AND
+                e.Id = %s
+            ORDER BY
+                em.Priority"""
+            variables = [id]
+            resp = DbManager.query(query, variables)
+            if len(resp) == 0:
+                return []
+            muscles = [Muscle(row[12], row[6], row[11], row[13])
+                       for row in resp]
+            ex = Exercise.create_from_query_row(resp[0])
+            ex.set_muscles(muscles)
+            return [ex]
 
     def is_exist(name):
         return DbManager.query(
@@ -175,3 +213,37 @@ class Exercise:
             query += " and re.RowNum <=10"
         resp = DbManager.query(query, variables)
         return [Exercise.create_from_query_row(row) for row in resp]
+
+    def get_rating(exercise_id):
+        query = """
+        select
+            r.Rating,
+            r.Description,
+            r.Time,
+            u.Name,
+            u.FitnessLevel,
+            u.Picture
+        from
+            boya_fit_1.Rating r,
+            boya_fit_1.Users u
+        WHERE	
+            u.Id = r.UserId
+        AND
+            r.ExerciseId = %s
+        ORDER BY
+            r.Time desc
+        """
+        variables = [exercise_id]
+        resp = DbManager.query(query, variables)
+        ratings = []
+        for row in resp:
+            rating = {
+                "rating": row[0],
+                "description": row[1],
+                "time": row[2],
+                "user_name": row[3],
+                "fitness_level": row[4],
+                "picture": row[5]
+            }
+            ratings.append(rating)
+        return ratings

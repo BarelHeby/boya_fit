@@ -62,6 +62,7 @@ class Gyms:
     def insert(self):
         numbers = [0, 0] if len(self.Latlon.split(
             ',')) != 2 else self.Latlon.split(',')
+        numbers = [float(numbers[0])/90, float(numbers[1])/90]
         return self._query_func("""
                 INSERT INTO 
                 Gyms 

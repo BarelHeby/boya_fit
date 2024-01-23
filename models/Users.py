@@ -62,7 +62,7 @@ class User:
             picture = profile_pictures[np.random.randint(
                 0, len(profile_pictures))]
             latitude = np.random.uniform(-90, 90)
-            longitude = np.random.uniform(-180, 180)
+            longitude = np.random.uniform(-90, 90)
             users.append(User(name, email, password,
                          fitness_level, weight, height, picture, latitude, longitude))
         return users

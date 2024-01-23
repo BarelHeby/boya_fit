@@ -9,6 +9,7 @@ import Home from "./pages/home";
 import Exercises from "./pages/exercises";
 import "./styles/animations.css";
 import "./styles/scales.css";
+import Exercise from "./pages/exercise";
 
 function App() {
   const router = createBrowserRouter([
@@ -18,6 +19,7 @@ function App() {
     { path: "/login", element: <Login /> },
     { path: "/Exercises", element: <Exercises /> },
     { path: "/Exercises/:category", element: <Exercises /> },
+    { path: "/Exercises/s/:id", element: <Exercise /> },
   ]);
   return (
     <div className="App w-100 overflow-hidden">

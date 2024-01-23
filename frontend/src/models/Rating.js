@@ -37,4 +37,11 @@ export default class Rating extends Entity {
       json.time
     );
   }
+  static async get_by_exercise(exerciseId) {
+    const resp = await super.get("exercises", `rating/${exerciseId}`);
+    if (resp.status !== 200) {
+      return [];
+    }
+    return resp.data;
+  }
 }

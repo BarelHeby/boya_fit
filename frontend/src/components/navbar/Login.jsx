@@ -16,7 +16,7 @@ function Login() {
     if (resp.status === 200) {
       const u = User.fromJson(resp.data);
       sessionStorage.setItem("username", JSON.stringify(u.toJson()));
-      window.location.href = "/";
+      window.location.reload();
     } else {
       alert("Login Failed");
     }
