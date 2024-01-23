@@ -56,7 +56,7 @@ function NavBar() {
               className="active text-center ms-2"
               onClick={() => {
                 sessionStorage.removeItem("username");
-                window.location.href = "/";
+                window.location.reload();
               }}
             >
               <IoIosLogOut

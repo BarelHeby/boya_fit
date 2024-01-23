@@ -213,3 +213,37 @@ class Exercise:
             query += " and re.RowNum <=10"
         resp = DbManager.query(query, variables)
         return [Exercise.create_from_query_row(row) for row in resp]
+
+    def get_rating(exercise_id):
+        query = """
+        select
+            r.Rating,
+            r.Description,
+            r.Time,
+            u.Name,
+            u.FitnessLevel,
+            u.Picture
+        from
+            boya_fit_1.Rating r,
+            boya_fit_1.Users u
+        WHERE	
+            u.Id = r.UserId
+        AND
+            r.ExerciseId = %s
+        ORDER BY
+            r.Time desc
+        """
+        variables = [exercise_id]
+        resp = DbManager.query(query, variables)
+        ratings = []
+        for row in resp:
+            rating = {
+                "rating": row[0],
+                "description": row[1],
+                "time": row[2],
+                "user_name": row[3],
+                "fitness_level": row[4],
+                "picture": row[5]
+            }
+            ratings.append(rating)
+        return ratings

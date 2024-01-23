@@ -5,82 +5,24 @@ import { Container, Row, Col } from "react-bootstrap";
 import InfoCard from "./InfoCard";
 import { Card } from "react-bootstrap";
 // import GoogleMapReact from "google-map-react";
-import Map from "react-map-gl";
+import cardBackground from "../../images/card_background.jpg";
 import Gyms from "./Gyms";
+import ExerciseDescription from "./ExerciseDescription";
+import ExerciseSingleNav from "./ExerciseSingleNav";
+import Reviews from "./Reviews";
 function Exercise() {
   const { id } = useParams();
-  const [exercise, setExercise] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
+  const modes = ["Description", "Gyms", "Reviews"];
+  const [mode, setMode] = React.useState(modes[0]);
 
-  React.useEffect(() => {
-    ExerciseModel.get(id).then((exercise) => {
-      if (exercise.length === 0) {
-        setExercise(null);
-        setLoading(false);
-        return;
-      }
-      setExercise(exercise[0]);
-
-      setLoading(false);
-    });
-  }, [id]);
   return (
-    <Container>
-      <Card className="mt-3 ">
-        <Card.Header>
-          <h1 className="text-center">{exercise?.name}</h1>
-        </Card.Header>
-      </Card>
-
-      <Row className="mt-3">
-        <Col>
-          <InfoCard title={"Avg Rating"} content={exercise?.rating} />
-        </Col>
-        <Col>
-          <InfoCard title={"Difficulty"} content={exercise?.difficulty} />
-        </Col>
-        <Col>
-          <InfoCard title={"Body Part"} content={exercise?.bodyPartName} />
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col xs={6}>
-          <InfoCard
-            title={"Instructions"}
-            content={
-              <ul>
-                {exercise?.instructions?.map((intruction, index) => (
-                  <li key={index} className="text-start">
-                    <p>{intruction}</p>
-                  </li>
-                ))}
-              </ul>
-            }
-          />
-        </Col>
-        <Col>
-          <Row>
-            <InfoCard title={"Equipment"} content={exercise?.equipmentName} />
-          </Row>
-          <Row className="mt-3">
-            <InfoCard
-              title={"Time To Complete (Sec)"}
-              content={exercise?.timeSeconds}
-            />
-          </Row>
-        </Col>
-      </Row>
-      <Row>
-        {exercise?.muscles.map((muscle, index) => (
-          <Col key={index} className="mt-3">
-            <InfoCard title={"Muscle"} content={muscle.name} />
-          </Col>
-        ))}
-      </Row>
-      <Row>
-        <Gyms exerciseId={id} />
-      </Row>
-    </Container>
+    <>
+      <ExerciseSingleNav modes={modes} mode={mode} setMode={setMode} />
+      {mode === "Description" && <ExerciseDescription id={id} />}
+      {mode === "Gyms" && <Gyms exerciseId={id} />}
+      {mode === "Reviews" && <Reviews id={id} />}
+    </>
   );
 }
 
