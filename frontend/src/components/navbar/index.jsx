@@ -24,7 +24,7 @@ function NavBar() {
         <Nav.Link href="/users" className="active">
           Users
         </Nav.Link>
-        <Nav.Link href="/exercises" className="active">
+        <Nav.Link href="/exercises/All" className="active">
           Exercises
         </Nav.Link>
         <Nav.Link href="/ratings" className="active">
