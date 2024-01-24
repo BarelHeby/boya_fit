@@ -31,7 +31,7 @@ class Rating:
     def generate_and_insert(query_func: callable):
         users = User.get(query_func)
         exercises = Exercise.get(query_func)
-        for i in range(3000):
+        for i in range(10000):
             user = users[randrange(len(users))]
             exercise = exercises[randrange(len(exercises))]
             stars = randrange(1, 6)

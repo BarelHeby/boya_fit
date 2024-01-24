@@ -31,11 +31,11 @@ class TableCreator:
 
     def fill(self):
         """Fill the database with data from csv files"""
-        # data = pd.read_csv("data/exercises.csv")
-        # data.apply(self._fill_by_row, axis=1)
-        # User.generate_and_insert(self._query_func)
-        # UsersHistory.generate_and_insert(self._query_func)
-        # Rating.generate_and_insert(self._query_func)
+        data = pd.read_csv("data/exercises.csv")
+        data.apply(self._fill_by_row, axis=1)
+        User.generate_and_insert(self._query_func)
+        UsersHistory.generate_and_insert(self._query_func)
+        Rating.generate_and_insert(self._query_func)
         data = pd.read_csv("data/gyms.csv")
         data = data.fillna("")
         equipments = Equipment.get_all(self._query_func)
