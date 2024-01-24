@@ -76,7 +76,7 @@ function Exercises() {
                     );
                   })}
                 {!category ||
-                  (category === "All" && (
+                  (category.toLowerCase() === "all" && (
                     <Col>
                       <Card
                         className=" m-3 rounded  pointer"

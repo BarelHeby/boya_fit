@@ -72,8 +72,12 @@ class Gyms:
                                 [self.Name, self.Adress, self.City, self.Zip, self.Country, self.CountryShortCode, self.IsKids, self.IsActive, self.Logo_Photo, float(numbers[0]), float(numbers[1])], True)
 
     def insert_equipments(self, equipments: list):
-
-        for equipment in equipments:
-            if randint(0, 1):
-                self._query_func(
-                    f"INSERT INTO Gyms_Equipments (GymId,EquipmentId) VALUES (%s,%s)", [self.Id, equipment[0]], True)
+        used = []
+        for i in range(3):
+            while 1:
+                idx = randint(0, len(equipments)-1)
+                if idx not in used:
+                    used.append(idx)
+                    self._query_func(
+                        f"INSERT INTO Gyms_Equipments (GymId,EquipmentId) VALUES (%s,%s)", [self.Id, equipments[idx][0]], True)
+                    break
