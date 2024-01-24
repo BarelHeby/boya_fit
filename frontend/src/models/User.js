@@ -83,6 +83,29 @@ export default class User extends Entity {
     }
     return [];
   }
+
+  static async getFriendsRequests(id) {
+    const resp = await super.get("users", id + "/friends/requests");
+    if (resp.status === 200) {
+      return resp.data.map((user) => User.fromJson(user));
+    }
+    return [];
+  }
+
+  static async addFriend(id, friendId, isAccepted = null, isRequest = null) {
+    const resp = await super.post("users/" + id + "/friends/requests", {
+      friendId,
+      isAccepted,
+      isRequest,
+    });
+    if (resp.status === 200 && isRequest) {
+      return 200;
+    }
+    if (resp.status === 200) {
+      return resp?.data?.map((user) => User.fromJson(user));
+    }
+    return [];
+  }
   static async getActive() {
     const resp = await super.get("users", "active/6");
     console.log(resp);
@@ -91,5 +114,13 @@ export default class User extends Entity {
         return { user: User.fromJson(user.user), count: user.count };
       });
     }
+  }
+
+  static async getStatus(id, friendId) {
+    const resp = await super.get("users", id + "/friends/status/" + friendId);
+    if (resp.status === 200) {
+      return resp.data.status;
+    }
+    return null;
   }
 }

@@ -10,12 +10,14 @@ import Exercises from "./pages/exercises";
 import "./styles/animations.css";
 import "./styles/scales.css";
 import Exercise from "./pages/exercise";
+import Friends from "./pages/friends";
 
 function App() {
   const router = createBrowserRouter([
     { path: "/", element: <Home /> },
     { path: "/users", element: <Users /> },
     { path: "/users/:id", element: <User /> },
+    { path: "/users/friends", element: <Friends /> },
     { path: "/login", element: <Login /> },
     { path: "/Exercises", element: <Exercises /> },
     { path: "/Exercises/:category", element: <Exercises /> },

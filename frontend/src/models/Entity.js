@@ -6,8 +6,8 @@ export default class Entity {
   static async get(modelEndPointUrl, id = null) {
     return await ServiceManager.get(modelEndPointUrl, id);
   }
-  async add(data) {
-    return await ServiceManager.post(this.modelEndPointUrl, data);
+  static async post(modelEndPointUrl, data) {
+    return await ServiceManager.post(modelEndPointUrl, data);
   }
   async update(id, data) {
     ServiceManager.put(this.modelEndPointUrl, id, data);

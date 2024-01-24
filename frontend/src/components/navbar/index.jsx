@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Nav, NavItem, Navbar } from "react-bootstrap";
-import { CiUser } from "react-icons/ci";
 import boyaLogo from "../../images/logo/boya-white-logo-transparent.png";
 import "../../styles/animations.css";
 import Login from "./Login";
 import { IoIosLogOut } from "react-icons/io";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import User from "../../models/User";
 function NavBar() {
+  const [friendsRequests, setfriendsRequests] = React.useState([]);
   const user = sessionStorage.getItem("username")
     ? JSON.parse(sessionStorage.getItem("username"))
     : null;
+  useEffect(() => {
+    if (!user) {
+      sessionStorage.removeItem("friendsRequests");
+      return;
+    }
+    User.getFriendsRequests(user.id)
+      .then((res) => {
+        console.log(res);
+        sessionStorage.setItem("friendsRequests", JSON.stringify(res));
+        setfriendsRequests(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   return (
     <Navbar
-      // variant="outline-light"
       bg="dark"
       className="text-white text-center  "
       data-bs-theme="dark"
@@ -41,12 +57,28 @@ function NavBar() {
         {user ? (
           <>
             <label className="fs-5">Hello {user.name} | </label>
-
             <NavItem className="text-center ms-3 me-2 ">
-              <CiUser
+              <span className="badge rounded-circle bg-danger position-absolute bottom-0 mb-4 ms-4  ">
+                {friendsRequests.length}
+              </span>
+              <IoIosNotificationsOutline
                 color="white"
                 size={40}
                 className="pointer border-white border rounded-circle p-2"
+                onClick={() => (window.location.href = `/users/friends`)}
+              />
+
+              <br />
+              <small>Alerts</small>
+            </NavItem>
+
+            <NavItem className="text-center ms-3 me-2 ">
+              <img
+                alt="user"
+                src={user.picture}
+                width={40}
+                height={40}
+                className="pointer  border rounded-circle "
                 onClick={() => (window.location.href = `/users/${user.id}`)}
               />
               <br />

@@ -21,3 +21,6 @@ class Equipment:
     def delete(id: int, query_func: callable):
         query_func(
             f"DELETE FROM Equipments WHERE Id = %s", [id])
+
+    def get_all(query_func: callable):
+        return query_func("SELECT * FROM Equipments")

@@ -70,3 +70,10 @@ class Gyms:
                 VALUES 
                 (%s,%s,%s,%s,%s,%s,%s,%s,%s,ST_GeomFromText('POINT(%s %s)'))""",
                                 [self.Name, self.Adress, self.City, self.Zip, self.Country, self.CountryShortCode, self.IsKids, self.IsActive, self.Logo_Photo, float(numbers[0]), float(numbers[1])], True)
+
+    def insert_equipments(self, equipments: list):
+
+        for equipment in equipments:
+            if randint(0, 1):
+                self._query_func(
+                    f"INSERT INTO Gyms_Equipments (GymId,EquipmentId) VALUES (%s,%s)", [self.Id, equipment[0]], True)

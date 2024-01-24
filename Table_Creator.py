@@ -31,21 +31,21 @@ class TableCreator:
 
     def fill(self):
         """Fill the database with data from csv files"""
-        data = pd.read_csv("data/exercises.csv")
-        data.apply(self._fill_by_row, axis=1)
-        User.generate_and_insert(self._query_func)
-        UsersHistory.generate_and_insert(self._query_func)
-        Rating.generate_and_insert(self._query_func)
+        # data = pd.read_csv("data/exercises.csv")
+        # data.apply(self._fill_by_row, axis=1)
+        # User.generate_and_insert(self._query_func)
+        # UsersHistory.generate_and_insert(self._query_func)
+        # Rating.generate_and_insert(self._query_func)
         data = pd.read_csv("data/gyms.csv")
-        data=data.fillna("")
-        data.apply(self._fill_gym, axis=1)
+        data = data.fillna("")
+        equipments = Equipment.get_all(self._query_func)
+        data.apply(self._fill_gym, axis=1, equipments=(equipments))
 
-
-    def _fill_gym(self, row: pd.Series):
+    def _fill_gym(self, row: pd.Series, equipments: list):
         # Create a DataRow object from the row
-        data_row = Gyms.rowToData(row,self._query_func)
+        data_row = Gyms.rowToData(row, self._query_func)
         data_row.insert()
-
+        data_row.insert_equipments(equipments)
 
     def _fill_by_row(self, row: pd.Series):
         # Create a DataRow object from the row

@@ -1,8 +1,8 @@
 import Entity from "./Entity";
-
+const LOGINPATH = "users/login/";
 export default class Login extends Entity {
   constructor(email, password) {
-    super("users/login");
+    super(LOGINPATH);
     this.email = email;
     this.password = password;
   }
@@ -19,7 +19,7 @@ export default class Login extends Entity {
   }
 
   async add() {
-    return await super.add(this.toJson());
+    return await Entity.post(LOGINPATH, this.toJson());
   }
 
   async delete() {

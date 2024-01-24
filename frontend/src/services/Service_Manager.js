@@ -13,7 +13,7 @@ export default class ServiceManager {
       });
   }
   static async post(modelUrl, data = null) {
-    const fullUrl = process.env.REACT_APP_API_URL + modelUrl + "/";
+    const fullUrl = process.env.REACT_APP_API_URL + modelUrl;
     return await axios
       .post(fullUrl, data)
       .then((res) => {

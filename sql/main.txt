@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Gyms` (
   `Latlon` POINT NOT NULL,
   PRIMARY KEY (`Id`));
 
-CREATE VIEW `User_History_View` AS
+CREATE OR REPLACE VIEW `User_History_View` AS
 select
 	DISTINCT
 		uh.Time,
@@ -210,6 +210,22 @@ CREATE  OR REPLACE VIEW `Exercises_Full_View` AS
 		em.Priority;
 
 
-CREATE TABLE `boya_fit_1`.`Gyms_Equipments` (
+CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Gyms_Equipments` (
   `GymId` INT NOT NULL,
   `EquipmentId` INT NOT NULL);
+
+CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Friends_Requests` (
+  `AddressedUserId` INT NOT NULL,
+  `AddresseeUserId` INT NOT NULL,
+  INDEX `fk_Friends_Requests_1_idx` (`AddressedUserId` ASC) VISIBLE,
+  INDEX `fk_Friends_Requests_2_idx` (`AddresseeUserId` ASC) VISIBLE,
+  CONSTRAINT `fk_Friends_Requests_1`
+    FOREIGN KEY (`AddressedUserId`)
+    REFERENCES `boya_fit_1`.`Users` (`Id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Friends_Requests_2`
+    FOREIGN KEY (`AddresseeUserId`)
+    REFERENCES `boya_fit_1`.`Users` (`Id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION);

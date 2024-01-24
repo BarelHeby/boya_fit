@@ -134,3 +134,60 @@ class User:
     """
         resp = DbManager.query(query)
         return [{"user": User.create_from_query_row(row), "count": row[10]} for row in resp]
+
+    def get_friends_requests(id):
+        print(id)
+        query = """
+        select
+            Users_View.*
+        from
+            Users_View,
+            Friends_Requests
+        where
+            Users_View.Id = Friends_Requests.AddresseeUserId
+        and 
+            Friends_Requests.AddressedUserId = %s
+    """
+        resp = DbManager.query(query, [id])
+        return [User.create_from_query_row(row) for row in resp]
+
+    def is_friend(id, friendId):
+        query = """
+        select
+            *
+        from
+            Users_Friends
+        where
+            (UserId1 = %s and UserId2 = %s)
+        or
+            (UserId1 = %s and UserId2 = %s)
+    """
+        resp = DbManager.query(
+            query, [id, friendId, friendId, id, ])
+        return len(resp) > 0
+
+    def is_friend_request(id, friendId):
+        query = """
+        select
+            *
+        from
+            Friends_Requests
+        where
+            AddressedUserId = %s and AddresseeUserId = %s
+        or
+            AddresseeUserId = %s and AddressedUserId = %s
+    """
+        resp = DbManager.query(query, [id, friendId, id, friendId])
+        return len(resp) > 0
+
+    def add_friend(id, friendId, is_accepted):
+        if is_accepted:
+            query = "INSERT INTO Users_Friends (UserId1, UserId2) VALUES (%s, %s); DELETE FROM Friends_Requests WHERE AddressedUserId=%s AND AddresseeUserId=%s"
+            DbManager.query(query, [id, friendId, id, friendId], True)
+        else:
+            query = "DELETE FROM Friends_Requests WHERE AddressedUserId=%s AND AddresseeUserId=%s"
+            DbManager.query(query, [id, friendId])
+
+    def send_friend_request(id, friendId):
+        query = "INSERT INTO Friends_Requests (AddresseeUserId,AddressedUserId ) VALUES (%s, %s)"
+        DbManager.query(query, [id, friendId], True)
