@@ -23,4 +23,15 @@ export default class UserHistory extends Entity {
     }
     return [];
   }
+
+  static async post(userId, exerciseId) {
+    const resp = await super.post("users_history/", {
+      userId,
+      exerciseId,
+    });
+    if (resp.status === 200) {
+      return true;
+    }
+    return false;
+  }
 }

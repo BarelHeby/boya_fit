@@ -10,3 +10,13 @@ class UsersHistoryView(APIView):
         print(id)
         exercises = UsersHistory.get(id)
         return Response([exercise.to_json() for exercise in exercises], status=status.HTTP_200_OK)
+
+    def post(self, request):
+        try:
+            user_id = request.data["userId"]
+            exercise_id = request.data["exerciseId"]
+            UsersHistory.add(user_id, exercise_id)
+            return Response(status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)

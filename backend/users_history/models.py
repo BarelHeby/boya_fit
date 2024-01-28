@@ -26,6 +26,9 @@ class UsersHistory:
         res = DbManager.query(query, [id])
         return [UsersHistory.create_from_query_row(row) for row in res]
 
+    def add(user_id, exercise_id):
+        UsersHistory.insert(user_id, exercise_id)
+
     def create_from_query_row(row):
         time = row[0]
         user_id = row[1]
@@ -50,13 +53,13 @@ class UsersHistory:
             "body_part": self.body_part,
         }
 
-    def insert(self, date_sub=0, hours_sub=0):
+    def insert(user_id, exercise_id, date_sub=0, hours_sub=0):
         now = datetime.now() - timedelta(days=date_sub, hours=hours_sub)
         formatted_date = now.strftime('%Y-%m-%d %H:%M:%S')
-        self._query_func("""
+        DbManager.query("""
             INSERT INTO Users_History 
             (UserId,ExerciseId,Time) 
-            VALUES (%s,%s,%s)""", [self.user_id, self.exercise_id, formatted_date], True)
+            VALUES (%s,%s,%s)""", [user_id, exercise_id, formatted_date], True)
 
     def delete(user_id, exercise_id):
         DbManager.query(

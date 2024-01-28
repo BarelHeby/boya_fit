@@ -12,7 +12,6 @@ import ExerciseSingleNav from "./ExerciseSingleNav";
 import Reviews from "./Reviews";
 function Exercise() {
   const { id } = useParams();
-  const [loading, setLoading] = React.useState(true);
   const modes = ["Description", "Gyms", "Reviews"];
   const [mode, setMode] = React.useState(modes[0]);
 

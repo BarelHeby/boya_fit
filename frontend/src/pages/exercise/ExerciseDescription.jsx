@@ -1,25 +1,19 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import ExerciseModel from "../../models/Exercise";
 import { Container, Row, Col } from "react-bootstrap";
 import InfoCard from "./InfoCard";
 import { Card } from "react-bootstrap";
-// import GoogleMapReact from "google-map-react";
 import cardBackground from "../../images/card_background.jpg";
-import Gyms from "./Gyms";
+import StartExercise from "./StartExercise";
 function ExerciseDescription({ id }) {
-  const [loading, setLoading] = React.useState(true);
   const [exercise, setExercise] = React.useState(null);
   React.useEffect(() => {
     ExerciseModel.get(id).then((exercise) => {
       if (exercise.length === 0) {
         setExercise(null);
-        setLoading(false);
         return;
       }
       setExercise(exercise[0]);
-
-      setLoading(false);
     });
   }, [id]);
   return (
@@ -69,12 +63,17 @@ function ExerciseDescription({ id }) {
           />
         </Col>
       </Row>
-      <Row>
+      <Row className="mt-3">
         {exercise?.muscles.map((muscle, index) => (
-          <Col key={index} className="mt-3">
+          <Col key={index}>
             <InfoCard title={"Muscle " + (index + 1)} content={muscle.name} />
           </Col>
         ))}
+      </Row>
+      <Row className="mt-3">
+        <Col xs={12}>
+          <StartExercise exercise={exercise} />
+        </Col>
       </Row>
     </Container>
   );
