@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 import "./user.css";
 function ExerciseCard({ user, exercise, time, body_part }) {
   return (
-    <Card className="p-0">
+    <Card className="p-0 shadow mt-2">
       <Card.Header className="border rounded-top">
         <h4>{exercise.name}</h4>
       </Card.Header>

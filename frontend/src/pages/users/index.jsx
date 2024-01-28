@@ -36,14 +36,15 @@ function Users() {
           />
         </Col>
       </Row>
-      <Row className="d-flex justify-content-center">
+      <Row className="d-flex justify-content-center gx-5 me-1 ms-1">
         {filteredUsers.map((user, index) => {
           return (
             <Col
-              xs={6}
-              md={4}
-              lg={2}
-              className=" me-2 mt-2 bg-dark border-white border text-white  rounded"
+              // xs={12}
+              xs={12}
+              // md={4}
+              lg={4}
+              className="mt-2 mb-2 "
               key={index}
             >
               <UserCard user={user} />

@@ -1,23 +1,30 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, Col, Row } from "react-bootstrap";
 function UserCard({ user }) {
   return (
-    <div className=" text-center align-content-center ">
-      <img
-        src={user.picture}
-        width={100}
-        height={100}
-        className="rounded-circle mt-5 pointer"
-        alt="user"
-        onClick={() => (window.location.href = `/users/${user.id}`)}
-      />
-      <Card.Body className="text-center mt-2">
+    <Row
+      className=" text-center align-items-center  p-3 shadow pointer"
+      onClick={() => (window.location.href = `/users/${user.id}`)}
+    >
+      <Col xs={2}>
+        <img
+          src={user.picture}
+          width={80}
+          height={80}
+          className="rounded-circle  pointer shadow"
+          alt="user"
+          onClick={() => (window.location.href = `/users/${user.id}`)}
+        />
+      </Col>
+      <Col>
+        {/* <Card.Body className="text-center mt-2"> */}
         <Card.Title>{user.name}</Card.Title>
-        <Card.Text className="mb-0">{user.email}</Card.Text>
+        <Card.Text className="mb-0 ">{user.email}</Card.Text>
         <Card.Text>Fitness Level : {user.fitnessLevel}</Card.Text>
-        <br />
-      </Card.Body>
-    </div>
+
+        {/* </Card.Body> */}
+      </Col>
+    </Row>
   );
 }
 

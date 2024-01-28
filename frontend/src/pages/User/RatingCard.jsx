@@ -6,7 +6,7 @@ const RatingCard = ({ rating }) => {
     stars.push(<span key={i}>&#9733;</span>);
   }
   return (
-    <Card>
+    <Card className="shadow mt-2">
       <Card.Header>
         <h4>{rating.exerciseName}</h4>
       </Card.Header>
