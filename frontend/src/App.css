@@ -19,3 +19,7 @@ label,p,span{
 .underscore{
     text-decoration: underline;
 }
+
+.serif{
+  font-family: serif;
+}

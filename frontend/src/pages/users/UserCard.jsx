@@ -18,7 +18,9 @@ function UserCard({ user }) {
       </Col>
       <Col>
         {/* <Card.Body className="text-center mt-2"> */}
-        <Card.Title>{user.name}</Card.Title>
+        <Card.Title className="serif fs-4 ">
+          <b>{user.name}</b>
+        </Card.Title>
         <Card.Text className="mb-0 ">{user.email}</Card.Text>
         <Card.Text>Fitness Level : {user.fitnessLevel}</Card.Text>
 
