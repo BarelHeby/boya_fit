@@ -11,6 +11,7 @@ import "./styles/animations.css";
 import "./styles/scales.css";
 import Exercise from "./pages/exercise";
 import Friends from "./pages/friends";
+import Workout from "./pages/workout";
 
 function App() {
   const router = createBrowserRouter([
@@ -22,6 +23,7 @@ function App() {
     { path: "/Exercises", element: <Exercises /> },
     { path: "/Exercises/:category", element: <Exercises /> },
     { path: "/Exercises/s/:id", element: <Exercise /> },
+    { path: "/Exercises/m/workout", element: <Workout /> },
   ]);
   return (
     <div className="App w-100 overflow-hidden">

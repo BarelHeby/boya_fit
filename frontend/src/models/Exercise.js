@@ -65,11 +65,11 @@ export default class Exercise extends Entity {
       json.name,
       json.difficulty,
       json.calories,
-      json.time_seconds,
+      json.time_seconds || json.timeSeconds,
       json.equipmentId,
       json.bodyPartId,
       json.instructions,
-      json.body_part_name,
+      json.body_part_name || json.bodyPartName,
       json.equipment_name,
       json.muscles,
       json.rating

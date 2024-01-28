@@ -6,6 +6,8 @@ import Login from "./Login";
 import { IoIosLogOut } from "react-icons/io";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import User from "../../models/User";
+import { BiDumbbell } from "react-icons/bi";
+import { getTodayWorkout, clearTodayWorkout } from "../../storage/workout";
 function NavBar() {
   const [friendsRequests, setfriendsRequests] = React.useState([]);
   const user = sessionStorage.getItem("username")
@@ -14,6 +16,7 @@ function NavBar() {
   useEffect(() => {
     if (!user) {
       sessionStorage.removeItem("friendsRequests");
+      clearTodayWorkout();
       return;
     }
     User.getFriendsRequests(user.id)
@@ -57,6 +60,20 @@ function NavBar() {
         {user ? (
           <>
             <label className="fs-5">Hello {user.name} | </label>
+            <NavItem className="text-center ms-3 me-2 ">
+              <span className="badge rounded-circle bg-danger position-absolute bottom-0 mb-4 ms-4  ">
+                {getTodayWorkout().length}
+              </span>
+              <BiDumbbell
+                color="white"
+                size={40}
+                className="pointer border-white border rounded-circle p-2"
+                onClick={() => (window.location.href = `/exercises/m/workout`)}
+              />
+
+              <br />
+              <small>Workout</small>
+            </NavItem>
             <NavItem className="text-center ms-3 me-2 ">
               <span className="badge rounded-circle bg-danger position-absolute bottom-0 mb-4 ms-4  ">
                 {friendsRequests.length}

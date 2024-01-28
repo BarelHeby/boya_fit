@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import UserHistory from "../../models/UserHistory";
-
+import { addTodayWorkout } from "../../storage/workout";
 function StartExercise({ exercise }) {
   const [state, setState] = React.useState("inactive");
   const [startTime, setStartTime] = React.useState(null);
@@ -32,6 +32,15 @@ function StartExercise({ exercise }) {
       alert("Something went wrong");
     }
   };
+  const addToWorkout = () => {
+    console.log(exercise);
+    const tempExercise = { ...exercise };
+    tempExercise.bodyPartName = exercise.bodyPartName;
+    const resp = addTodayWorkout(tempExercise);
+    if (resp) alert("Exercise added to today's workout");
+    else alert("Something went wrong, Exercise not added to today's workout");
+  };
+
   React.useEffect(() => {
     let interval;
     if (startTime) {
@@ -54,13 +63,18 @@ function StartExercise({ exercise }) {
   return (
     <>
       {state === "inactive" ? (
-        <Button
-          variant="success"
-          className="w-100 pump-1 "
-          onClick={startTimer}
-        >
-          Start Exercise
-        </Button>
+        <Row>
+          <Col>
+            <Button variant="success" className="w-100 " onClick={startTimer}>
+              Start Exercise
+            </Button>
+          </Col>
+          <Col>
+            <Button variant="warning" className="w-100" onClick={addToWorkout}>
+              Add To Today's Workout
+            </Button>
+          </Col>
+        </Row>
       ) : state === "active" ? (
         <Button variant="danger" className="w-100" onClick={stopTimer}>
           Stop Exercise ( {delta_from_exercise_seconds} Seconds Left )
