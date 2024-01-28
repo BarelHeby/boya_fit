@@ -18,6 +18,17 @@ function ExerciseDescription({ id }) {
   }, [id]);
   return (
     <Container className="mt-3 mb-3">
+      <Row className="mt-3 text-center">
+        <Col xs={12}>
+          {sessionStorage.getItem("username") ? (
+            <StartExercise exercise={exercise} />
+          ) : (
+            <label className="fs-5 border bg-warning p-3 rounded">
+              Login To Start Exercise
+            </label>
+          )}
+        </Col>
+      </Row>
       <Card className="mt-3 ">
         <Card.Header>
           <h1 className="text-center">{exercise?.name}</h1>
@@ -69,11 +80,6 @@ function ExerciseDescription({ id }) {
             <InfoCard title={"Muscle " + (index + 1)} content={muscle.name} />
           </Col>
         ))}
-      </Row>
-      <Row className="mt-3">
-        <Col xs={12}>
-          <StartExercise exercise={exercise} />
-        </Col>
       </Row>
     </Container>
   );

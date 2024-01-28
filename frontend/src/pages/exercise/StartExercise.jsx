@@ -54,7 +54,11 @@ function StartExercise({ exercise }) {
   return (
     <>
       {state === "inactive" ? (
-        <Button variant="success" className="w-100" onClick={startTimer}>
+        <Button
+          variant="success"
+          className="w-100 pump-1 "
+          onClick={startTimer}
+        >
           Start Exercise
         </Button>
       ) : state === "active" ? (
@@ -64,12 +68,20 @@ function StartExercise({ exercise }) {
       ) : (
         <Row>
           <Col>
-            <Button variant="success" className="w-100" onClick={saveExercise}>
+            <Button
+              variant="success"
+              className="w-100 slideInLeft"
+              onClick={saveExercise}
+            >
               Save Exercise To History
             </Button>
           </Col>
           <Col>
-            <Button variant="danger" className="w-100" onClick={reset}>
+            <Button
+              variant="danger"
+              className="w-100 slideInRight"
+              onClick={reset}
+            >
               Discard Exercise
             </Button>
           </Col>
