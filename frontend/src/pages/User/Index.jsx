@@ -43,7 +43,7 @@ function User() {
     fetch_friends();
   }, [id]);
   return (
-    <Container className="mt-5">
+    <Container className="mt-3">
       <UserRow
         user={mainUser}
         latestWorkout={userHistory.length > 0 ? userHistory[0].time : "N/A"}
