@@ -82,7 +82,7 @@ function Home() {
         <HorizontalScroller items={ratings} />
       </Row>
       <hr />
-      <Row>
+      <Row className="mt-2 mb-2">
         <h2 className="text-center mb-2">Weekly Most Active Users</h2>
         <br />
         <FaMedal size={25} color="gold" />
