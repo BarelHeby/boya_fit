@@ -30,6 +30,10 @@ class DbManager:
         return cnx
 
     def _create_scheme(self):
+        first_query = f"Drop SCHEMA IF EXISTS `{self._database_name}` ;"
+        c = self.db.cursor()
+        c.execute(first_query)
+        c.close()
         query = f"CREATE SCHEMA IF NOT EXISTS `{self._database_name}` ;"
         c = self.db.cursor()
         c.execute(query)
