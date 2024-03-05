@@ -212,7 +212,17 @@ CREATE  OR REPLACE VIEW `Exercises_Full_View` AS
 
 CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Gyms_Equipments` (
   `GymId` INT NOT NULL,
-  `EquipmentId` INT NOT NULL);
+  `EquipmentId` INT NOT NULL),
+  CONSTRAINT `fk_Gyms_Equipments_1`
+    FOREIGN KEY (`GymId`)
+    REFERENCES `boya_fit_1`.`Gyms` (`Id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Gyms_Equipments_2`
+    FOREIGN KEY (`EquipmentId`)
+    REFERENCES `boya_fit_1`.`Equipments` (`Id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION;
 
 CREATE TABLE IF NOT EXISTS `boya_fit_1`.`Friends_Requests` (
   `AddressedUserId` INT NOT NULL,
