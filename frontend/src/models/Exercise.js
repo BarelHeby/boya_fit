@@ -83,6 +83,13 @@ export default class Exercise extends Entity {
     }
     return [];
   }
+  static async get_lowest_difficulty() {
+    const resp = await super.get("exercises/lowest_difficulty");
+    if (resp.status === 200) {
+      return resp.data.map((exercise) => Exercise.fromJson(exercise));
+    }
+    return [];
+  }
   add() {
     return super.add(this.toJson());
   }

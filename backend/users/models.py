@@ -191,3 +191,21 @@ class User:
     def send_friend_request(id, friendId):
         query = "INSERT INTO Friends_Requests (AddresseeUserId,AddressedUserId ) VALUES (%s, %s)"
         DbManager.query(query, [id, friendId], True)
+
+    def get_last_10_active_days_stats(id):
+        query = """
+            select 
+                DATE(Time),
+                count(*)
+            from
+                Users_History
+            where
+                UserId = %s
+            group by
+                1
+            order  by
+                1 desc
+            limit 10
+        """
+        resp = DbManager.query(query, [id])
+        return [{"date": row[0], "count": row[1]} for row in resp]

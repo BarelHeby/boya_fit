@@ -11,3 +11,9 @@ class RatingView(APIView):
         print(id)
         exercises = Rating.get(id)
         return Response([exercise.to_json() for exercise in exercises], status=status.HTTP_200_OK)
+
+
+class RatingBestExercises(APIView):
+    def get(self, request):
+        exercises = Rating.get_best_exercises_for_each_body_part()
+        return Response(exercises, status=status.HTTP_200_OK)

@@ -45,3 +45,9 @@ class ExerciseRatingView(APIView):
     def get(self, request, id):
         ratings = Exercise.get_rating(id)
         return Response(ratings, status=status.HTTP_200_OK)
+
+
+class ExerciseLowestDifficulty(APIView):
+    def get(self, request):
+        exercises = Exercise.get_lowest_difficulty_exercises()
+        return Response([exercise.to_json() for exercise in exercises], status=status.HTTP_200_OK)

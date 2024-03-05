@@ -12,6 +12,8 @@ import boyalogo from "../../images/logo/boya-black-logo-transparent.png";
 import wallpaper from "./wallpaper.jpg";
 import ActiveUsers from "./ActiveUsers";
 import { FaMedal } from "react-icons/fa";
+import MostRatedExercises from "./Most_Rated_Exercises";
+import Warmup from "./Warmup";
 function Home() {
   const [reviews, setReviews] = React.useState([]);
   const ratings = reviews.map((rev, index) => (
@@ -87,6 +89,22 @@ function Home() {
         <br />
         <FaMedal size={25} color="gold" />
         <ActiveUsers />
+      </Row>
+      <hr />
+      <Row className="mt-2 mb-2">
+        <h2 className="text-center mb-2">
+          Most Rated Exercise For Each Body Part
+        </h2>
+        <br />
+        <MostRatedExercises />
+      </Row>
+      <hr />
+      <Row className="mt-2 mb-2">
+        <h2 className="text-center mb-2">
+          Warmup (Lowest Difficulty Exercises)
+        </h2>
+        <br />
+        <Warmup />
       </Row>
       <div className="mt-2 pt-2 pb-2 bg-dark text-white d-flex align-content-end  ">
         <label className="ms-5">

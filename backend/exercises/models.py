@@ -247,3 +247,18 @@ class Exercise:
             }
             ratings.append(rating)
         return ratings
+
+    def get_lowest_difficulty_exercises():
+        query = """
+        select
+            *
+        from	
+            Exercises_View
+        where
+            Exercises_View.Difficulty = (
+            select min(Difficulty) from Exercises_View
+            )
+        limit 5
+        """
+        resp = DbManager.query(query)
+        return [Exercise.create_from_query_row(row) for row in resp]

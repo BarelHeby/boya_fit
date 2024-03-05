@@ -63,3 +63,41 @@ class Rating:
         """
         res = DbManager.query(query, args)
         return [Rating.create_from_query_row(row) for row in res]
+
+    def get_best_exercises_for_each_body_part():
+        query = """
+        WITH rated_exercises AS (
+        SELECT
+            Body_Parts.Id AS bodyPartId,
+            Exercises.Id AS ExerciseId,
+            ROW_NUMBER() OVER (PARTITION BY Body_Parts.Id ORDER BY AVG(Rating.Rating) DESC) AS row_number_
+        FROM
+            Rating
+        INNER JOIN Exercises ON Rating.ExerciseId = Exercises.Id
+        INNER JOIN Body_Parts ON Exercises.BodyPartId = Body_Parts.Id
+        GROUP BY
+            Body_Parts.Id, Exercises.Id
+        ),
+        lastest_rating as(
+            select
+                Rating.ExerciseId ExerciseId,
+                MAX(Time) max_time
+            from
+                Rating
+            group by 1
+        )
+        SELECT
+            Body_Parts.Name,
+            Exercises.Name,
+            Rating.Description
+        FROM
+            rated_exercises
+        INNER JOIN Body_Parts ON Body_Parts.id = rated_exercises.bodyPartId
+        INNER JOIN Exercises ON Exercises.Id = rated_exercises.ExerciseId
+        INNER JOIN lastest_rating ON lastest_rating.ExerciseId = Exercises.Id
+        INNER JOIN Rating on lastest_rating.ExerciseId = Rating.ExerciseId and lastest_rating.max_time = Rating.Time
+        WHERE
+            row_number_ = 1;
+        """
+        res = DbManager.query(query)
+        return [{"bodyPart": row[0], "exercise": row[1], "description": row[2]} for row in res]

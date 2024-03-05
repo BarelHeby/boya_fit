@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import UserView, UserFreinds, UserActive, UserFreindsRequests, Userstatus
 from .login import LoginView
+from .stats_view import UserStatsView
 urlpatterns = [
     path('', UserView.as_view()),
     path('<int:id>', UserView.as_view()),
@@ -9,5 +10,6 @@ urlpatterns = [
     path('<int:id>/friends/requests', UserFreindsRequests.as_view()),
     path('<int:id>/friends/status/<int:friend_id>',
          Userstatus.as_view()),
-    path('active/<int:rows>', UserActive.as_view())
+    path('active/<int:rows>', UserActive.as_view()),
+    path('stats/<int:id>', UserStatsView.as_view())
 ]

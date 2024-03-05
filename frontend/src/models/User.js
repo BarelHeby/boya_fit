@@ -123,4 +123,12 @@ export default class User extends Entity {
     }
     return null;
   }
+
+  static async getLastDaysActive(id) {
+    const resp = await super.get("users/stats/" + id);
+    if (resp.status === 200) {
+      return resp.data;
+    }
+    return null;
+  }
 }

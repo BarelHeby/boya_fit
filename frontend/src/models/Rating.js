@@ -44,4 +44,12 @@ export default class Rating extends Entity {
     }
     return resp.data;
   }
+
+  static async get_most_rated_exercises(userId) {
+    const resp = await super.get("rating/best");
+    if (resp.status !== 200) {
+      return [];
+    }
+    return resp.data;
+  }
 }
