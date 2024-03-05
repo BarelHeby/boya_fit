@@ -5,7 +5,7 @@ import os
 
 class DbManager:
     def __init__(self) -> None:
-        self._database_name = "boya_fit_1"
+        self._database_name = "boya_fit"
         self.db = self._connect()
         self._create_scheme()
         self.db.database = self._database_name

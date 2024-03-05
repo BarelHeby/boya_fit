@@ -224,8 +224,8 @@ class Exercise:
             u.FitnessLevel,
             u.Picture
         from
-            boya_fit_1.Rating r,
-            boya_fit_1.Users u
+            boya_fit.Rating r,
+            boya_fit.Users u
         WHERE	
             u.Id = r.UserId
         AND
