@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 import numpy as np
 from db.Db_Manager import DbManager
+from .Pictures_Links import profile_pictures
 
 
 class User:
@@ -19,7 +20,8 @@ class User:
         self.longitude = longitude
 
     def from_json(json, id=None):
-        return User(json["name"], json["email"], json["password"], json["fitness_level"], json["weight"], json["height"], json["picture"], json["latitude"], json["longitude"], id=id)
+        return User(json["name"], json["email"], json["password"], int(json["fitness_level"]), int(json["weight"]), int(json["height"]), json["picture"],
+                    json["latitude"] if "latitude" in json.keys() else np.random.uniform(-90, 90), json["longitude"] if "longitude" in json.keys() else np.random.uniform(-90, 90), id=id)
 
     def to_json(self):
         return {
@@ -57,8 +59,10 @@ class User:
 
     def insert(self):
         query = "INSERT INTO Users (Name, Email, Password, FitnessLevel, Weight, Height,Picture,Latlon) VALUES (%s, %s, %s, %s, %s, %s,%s,ST_GeomFromText('POINT(%s %s)'))"
+        picture = profile_pictures[np.random.randint(
+            0, len(profile_pictures))]
         DbManager.query(query, [self.name, self.email, self.password,
-                                self.fitness_level, self.weight, self.height, self.picture, self.latitude, self.longitude], True)
+                                self.fitness_level, self.weight, self.height, picture, self.latitude, self.longitude], True)
 
     def update(self):
         query = "UPDATE Users SET Name=%s, Email=%s, Password=%s, FitnessLevel=%s, Weight=%s, Height=%s,Picture=%s,Latlon=ST_GeomFromText('POINT(%s %s)') WHERE Id=%s"

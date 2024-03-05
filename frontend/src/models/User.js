@@ -35,7 +35,7 @@ export default class User extends Entity {
       name: this.name,
       email: this.email,
       password: this.password,
-      fitnessLevel: this.fitnessLevel,
+      fitness_level: this.fitnessLevel,
       weight: this.weight,
       height: this.height,
       picture: this.picture,
@@ -60,8 +60,8 @@ export default class User extends Entity {
     }
     return [];
   }
-  add() {
-    return super.add(this.toJson());
+  async add() {
+    return await Entity.post("users/", this.toJson());
   }
   delete() {
     return super.delete(this.id);

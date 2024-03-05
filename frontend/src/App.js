@@ -13,6 +13,7 @@ import Exercise from "./pages/exercise";
 import Friends from "./pages/friends";
 import Workout from "./pages/workout";
 import UserStats from "./pages/user_stats";
+import Register from "./pages/register";
 
 function App() {
   const router = createBrowserRouter([
@@ -22,6 +23,7 @@ function App() {
     { path: "/users/stats/:id", element: <UserStats /> },
     { path: "/users/friends", element: <Friends /> },
     { path: "/login", element: <Login /> },
+    { path: "/register", element: <Register /> },
     { path: "/Exercises", element: <Exercises /> },
     { path: "/Exercises/:category", element: <Exercises /> },
     { path: "/Exercises/s/:id", element: <Exercise /> },

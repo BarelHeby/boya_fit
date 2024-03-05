@@ -19,6 +19,7 @@ class UserView(APIView):
             else:
                 return Response({"error": "user already exists"}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
+            print(e)
             return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, id=None):
