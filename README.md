@@ -2,7 +2,7 @@
 <h2>Get Started</h2>
 <ol>
   <li>Update .env File with your MySql password</li>
-  <li>Run the following to install the project <pre><code>python Installation.py</code></pre></li>
+  <li>Run the following to install the project <pre><code>python Installations.py</code></pre></li>
   <li>Verify in MySql Workbanch that Scheme and tables exists </li>
 </ol>
 
