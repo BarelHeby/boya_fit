@@ -1,9 +1,9 @@
-CREATE TABLE IF NOT EXISTS `boya_fit`.`Body_Parts` (
+CREATE TABLE IF NOT EXISTS `db09`.`Body_Parts` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`));
 
-CREATE TABLE IF NOT EXISTS `boya_fit`.`Muscles` (
+CREATE TABLE IF NOT EXISTS `db09`.`Muscles` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `BodyPartId` INT NULL,
@@ -11,16 +11,16 @@ CREATE TABLE IF NOT EXISTS `boya_fit`.`Muscles` (
   INDEX `MuscleToBodyPart_idx` (`BodyPartId` ASC) VISIBLE,
   CONSTRAINT `MuscleToBodyPart`
     FOREIGN KEY (`BodyPartId`)
-    REFERENCES `boya_fit`.`Body_Parts` (`Id`)
+    REFERENCES `db09`.`Body_Parts` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE TABLE IF NOT EXISTS `boya_fit`.`Equipments` (
+CREATE TABLE IF NOT EXISTS `db09`.`Equipments` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`Id`));
 
-CREATE TABLE IF NOT EXISTS `boya_fit`.`Exercises` (
+CREATE TABLE IF NOT EXISTS `db09`.`Exercises` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(180) NULL,
   `Difficulty` INT NOT NULL,
@@ -35,16 +35,16 @@ CREATE TABLE IF NOT EXISTS `boya_fit`.`Exercises` (
   PRIMARY KEY (`Id`),
   CONSTRAINT `EquipmentToExercise`
     FOREIGN KEY (`EquipmentId`)
-    REFERENCES `boya_fit`.`Equipments` (`Id`)
+    REFERENCES `db09`.`Equipments` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `BodyPartToExercise`
     FOREIGN KEY (`BodyPartId`)
-    REFERENCES `boya_fit`.`Body_Parts` (`Id`)
+    REFERENCES `db09`.`Body_Parts` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE TABLE IF NOT EXISTS `boya_fit`.`Excercise_Muscles` (
+CREATE TABLE IF NOT EXISTS `db09`.`Excercise_Muscles` (
   `ExerciseId` INT NOT NULL,
   `MuscleId` INT NOT NULL,
   `Priority` INT NOT NULL,
@@ -52,16 +52,16 @@ CREATE TABLE IF NOT EXISTS `boya_fit`.`Excercise_Muscles` (
   INDEX `ByMuscle` (`MuscleId` ASC) VISIBLE,
   CONSTRAINT `ToExercise`
     FOREIGN KEY (`ExerciseId`)
-    REFERENCES `boya_fit`.`Exercises` (`Id`)
+    REFERENCES `db09`.`Exercises` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `ToMuscle`
     FOREIGN KEY (`MuscleId`)
-    REFERENCES `boya_fit`.`Muscles` (`Id`)
+    REFERENCES `db09`.`Muscles` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE TABLE IF NOT EXISTS `boya_fit`.`Users` (
+CREATE TABLE IF NOT EXISTS `db09`.`Users` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(180) NULL,
   `Email` VARCHAR(180) NULL,
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `boya_fit`.`Users` (
   INDEX `UsersByName` (`Name` ASC) VISIBLE);
 
 
-CREATE TABLE IF NOT EXISTS `boya_fit`.`Users_History` (
+CREATE TABLE IF NOT EXISTS `db09`.`Users_History` (
   `UserId` INT NOT NULL,
   `ExerciseId` INT NOT NULL,
   `Time` DATETIME NOT NULL,
@@ -84,16 +84,16 @@ CREATE TABLE IF NOT EXISTS `boya_fit`.`Users_History` (
   INDEX `idx_by_date_users_history` (`Time` ASC) VISIBLE,
   CONSTRAINT `fk_Users_History_1`
     FOREIGN KEY (`UserId`)
-    REFERENCES `boya_fit`.`Users` (`Id`)
+    REFERENCES `db09`.`Users` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Users_History_2`
     FOREIGN KEY (`ExerciseId`)
-    REFERENCES `boya_fit`.`Exercises` (`Id`)
+    REFERENCES `db09`.`Exercises` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE TABLE IF NOT EXISTS `boya_fit`.`Rating` (
+CREATE TABLE IF NOT EXISTS `db09`.`Rating` (
   `UserId` INT NULL,
   `ExerciseId` INT NULL,
   `Rating` INT NULL,
@@ -104,32 +104,32 @@ CREATE TABLE IF NOT EXISTS `boya_fit`.`Rating` (
   INDEX `idx_Time_Rating` (`Time` DESC, `Rating` DESC) VISIBLE,
   CONSTRAINT `fk_Rating_1`
     FOREIGN KEY (`UserId`)
-    REFERENCES `boya_fit`.`Users` (`Id`)
+    REFERENCES `db09`.`Users` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Rating_2`
     FOREIGN KEY (`ExerciseId`)
-    REFERENCES `boya_fit`.`Exercises` (`Id`)
+    REFERENCES `db09`.`Exercises` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION);
 
-CREATE TABLE  IF NOT EXISTS `boya_fit`.`Users_Friends` (
+CREATE TABLE  IF NOT EXISTS `db09`.`Users_Friends` (
   `UserId1` INT NULL,
   `UserId2` INT NULL,
   INDEX `fk_Users_Friends_1_idx` (`UserId1` ASC) VISIBLE,
   INDEX `fk_Users_Friends_2_idx` (`UserId2` ASC) VISIBLE,
   CONSTRAINT `fk_Users_Friends_1`
     FOREIGN KEY (`UserId1`)
-    REFERENCES `boya_fit`.`Users` (`Id`)
+    REFERENCES `db09`.`Users` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Users_Friends_2`
     FOREIGN KEY (`UserId2`)
-    REFERENCES `boya_fit`.`Users` (`Id`)
+    REFERENCES `db09`.`Users` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION);
 
-CREATE TABLE IF NOT EXISTS `boya_fit`.`Gyms` (
+CREATE TABLE IF NOT EXISTS `db09`.`Gyms` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(180) NOT NULL,
   `Adress` VARCHAR(180) NOT NULL,
@@ -210,32 +210,32 @@ CREATE  OR REPLACE VIEW `Exercises_Full_View` AS
 		em.Priority;
 
 
-CREATE TABLE IF NOT EXISTS `boya_fit`.`Gyms_Equipments` (
+CREATE TABLE IF NOT EXISTS `db09`.`Gyms_Equipments` (
   `GymId` INT NOT NULL,
   `EquipmentId` INT NOT NULL,
   CONSTRAINT `fk_Gyms_Equipments_1`
     FOREIGN KEY (`GymId`)
-    REFERENCES `boya_fit`.`Gyms` (`Id`)
+    REFERENCES `db09`.`Gyms` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Gyms_Equipments_2`
     FOREIGN KEY (`EquipmentId`)
-    REFERENCES `boya_fit`.`Equipments` (`Id`)
+    REFERENCES `db09`.`Equipments` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION);
 
-CREATE TABLE IF NOT EXISTS `boya_fit`.`Friends_Requests` (
+CREATE TABLE IF NOT EXISTS `db09`.`Friends_Requests` (
   `AddressedUserId` INT NOT NULL,
   `AddresseeUserId` INT NOT NULL,
   INDEX `fk_Friends_Requests_1_idx` (`AddressedUserId` ASC) VISIBLE,
   INDEX `fk_Friends_Requests_2_idx` (`AddresseeUserId` ASC) VISIBLE,
   CONSTRAINT `fk_Friends_Requests_1`
     FOREIGN KEY (`AddressedUserId`)
-    REFERENCES `boya_fit`.`Users` (`Id`)
+    REFERENCES `db09`.`Users` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Friends_Requests_2`
     FOREIGN KEY (`AddresseeUserId`)
-    REFERENCES `boya_fit`.`Users` (`Id`)
+    REFERENCES `db09`.`Users` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION);

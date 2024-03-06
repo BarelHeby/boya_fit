@@ -1,4 +1,4 @@
-CREATE TABLE `boya_fit`.`Muscles` (
+CREATE TABLE `db09`.`Muscles` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   `BodyPartId` INT NULL,
@@ -6,6 +6,6 @@ CREATE TABLE `boya_fit`.`Muscles` (
   INDEX `MuscleToBodyPart_idx` (`BodyPartId` ASC) VISIBLE,
   CONSTRAINT `MuscleToBodyPart`
     FOREIGN KEY (`BodyPartId`)
-    REFERENCES `boya_fit`.`Body_Parts` (`Id`)
+    REFERENCES `db09`.`Body_Parts` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);

@@ -5,7 +5,7 @@ import os
 
 class DbManager:
     def __init__(self) -> None:
-        self._database_name = "boya_fit"
+        self._database_name = "db09"
         self.db = self._connect()
         self._create_scheme()
         self.db.database = self._database_name
@@ -21,8 +21,8 @@ class DbManager:
     def _connect(self):
         load_dotenv()
         cnx = mysql.connector.connect(
-            user='root',
-            password=os.getenv('MYSQL_ROOT_PASSWORD'),
+            user='team09',
+            password="0009",
             host='127.0.0.1',
         )
         cnx.start_transaction()

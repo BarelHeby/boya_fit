@@ -66,10 +66,10 @@ class Gym:
             ST_Y(g.Latlon) lan,
             ST_Distance_Sphere(g.Latlon, u.Latlon) distance
         from
-            boya_fit.Gyms g,
-            boya_fit.Exercises e,
-            boya_fit.Gyms_Equipments ge,
-            boya_fit.Users u
+            db09.Gyms g,
+            db09.Exercises e,
+            db09.Gyms_Equipments ge,
+            db09.Users u
         where
             g.Id = ge.GymId
         and

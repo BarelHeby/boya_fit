@@ -1,4 +1,4 @@
-use boya_fit;
+use db09;
 SELECT
 	Users.Name User,
     count(*)

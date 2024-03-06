@@ -1,4 +1,4 @@
-CREATE TABLE `boya_fit`.`Exercises` (
+CREATE TABLE `db09`.`Exercises` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NULL,
   `Difficulty` INT NOT NULL,
@@ -12,11 +12,11 @@ CREATE TABLE `boya_fit`.`Exercises` (
   PRIMARY KEY (`Id`),
   CONSTRAINT `EquipmentToExercise`
     FOREIGN KEY (`EquipmentId`)
-    REFERENCES `boya_fit`.`Equipments` (`Id`)
+    REFERENCES `db09`.`Equipments` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `BodyPartToExercise`
     FOREIGN KEY (`BodyPartId`)
-    REFERENCES `boya_fit`.`Body_Parts` (`Id`)
+    REFERENCES `db09`.`Body_Parts` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);

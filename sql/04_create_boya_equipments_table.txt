@@ -1,4 +1,4 @@
-CREATE TABLE `boya_fit`.`Equipments` (
+CREATE TABLE `db09`.`Equipments` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`Id`));

@@ -1,4 +1,4 @@
-CREATE TABLE `boya_fit`.`Excercise_Muscles` (
+CREATE TABLE `db09`.`Excercise_Muscles` (
   `ExerciseId` INT NOT NULL,
   `MuscleId` INT NOT NULL,
   `Priority` INT NOT NULL,
@@ -6,11 +6,11 @@ CREATE TABLE `boya_fit`.`Excercise_Muscles` (
   INDEX `ByMuscle` (`MuscleId` ASC) VISIBLE,
   CONSTRAINT `ToExercise`
     FOREIGN KEY (`ExerciseId`)
-    REFERENCES `boya_fit`.`Exercises` (`Id`)
+    REFERENCES `db09`.`Exercises` (`Id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `ToMuscle`
     FOREIGN KEY (`MuscleId`)
-    REFERENCES `boya_fit`.`Muscles` (`Id`)
+    REFERENCES `db09`.`Muscles` (`Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
