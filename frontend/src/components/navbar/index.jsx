@@ -46,15 +46,6 @@ function NavBar() {
         <Nav.Link href="/exercises/All" className="active">
           Exercises
         </Nav.Link>
-        <Nav.Link href="/ratings" className="active">
-          Ratings
-        </Nav.Link>
-        <Nav.Link href="/user_history" className="active">
-          User History
-        </Nav.Link>
-        <Nav.Link href="/user_exercises" className="active">
-          User Exercises
-        </Nav.Link>
       </Nav>
       <Nav className="ms-auto me-5 d-flex align-items-center justiify-content-center">
         {user ? (
